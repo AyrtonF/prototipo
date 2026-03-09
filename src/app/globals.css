@@ -1,26 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa; /* Zinc 50 */
+  --foreground: #09090b; /* Zinc 950 */
+  --gold: #C5A059;
+  --gold-light: #E2CFAB;
+  --card-bg: #ffffff;
+}
+
+.dark {
+  --background: #09090b; /* Zinc 950 */
+  --foreground: #fafafa; /* Zinc 50 */
+  --card-bg: #121214;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --animate-mist: mist 3s ease-in-out infinite;
+  --animate-fade-up: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in-down: fadeInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes mist {
+    0%, 100% { transform: scale(1) translateY(0); opacity: 0.3; filter: blur(8px); }
+    50% { transform: scale(1.1) translateY(-10px); opacity: 0.5; filter: blur(12px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Luxury Mist Effect for Perfumes */
+.perfume-mist {
+  background: radial-gradient(circle at center, var(--gold-light) 0%, transparent 70%);
+  filter: blur(15px);
+  mix-blend-mode: soft-light;
+}
+
+.dark .perfume-mist {
+  mix-blend-mode: screen;
+  opacity: 0.2;
 }

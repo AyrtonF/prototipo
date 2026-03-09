@@ -225,7 +225,7 @@ export default function EditarProdutoPage() {
                     type="text"
                     className={cn(
                       "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white text-sm",
-                      errors.includes(`img${index}`) && "border-2 border-red-500"
+                      errors.includes(`img${index}`) ? "border-2 border-red-500" : ""
                     )}
                     placeholder="Cole URL da imagem..."
                     value={imageUrl}
@@ -248,7 +248,7 @@ export default function EditarProdutoPage() {
                   </button>
                   
                   <input
-                    ref={el => fileInputs.current[index] = el}
+                    ref={el => { fileInputs.current[index] = el; }}
                     type="file"
                     accept="image/*"
                     className="hidden"
@@ -271,7 +271,7 @@ export default function EditarProdutoPage() {
                 type="text"
                 className={cn(
                   "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white font-serif text-lg",
-                  errors.includes("name") && "border-2 border-red-500"
+                  errors.includes("name") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
@@ -299,7 +299,7 @@ export default function EditarProdutoPage() {
                 step="0.01"
                 className={cn(
                   "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white",
-                  errors.includes("price") && "border-2 border-red-500"
+                  errors.includes("price") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.price}
                 onChange={e => setFormData({...formData, price: Number(e.target.value)})}
@@ -313,7 +313,7 @@ export default function EditarProdutoPage() {
                 min="0"
                 className={cn(
                   "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white",
-                  errors.includes("stock") && "border-2 border-red-500"
+                  errors.includes("stock") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.stock}
                 onChange={e => setFormData({...formData, stock: Number(e.target.value)})}
@@ -326,7 +326,7 @@ export default function EditarProdutoPage() {
                 rows={4}
                 className={cn(
                   "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white text-sm resize-none",
-                  errors.includes("description") && "border-2 border-red-500"
+                  errors.includes("description") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.description}
                 onChange={e => setFormData({...formData, description: e.target.value})}
@@ -418,7 +418,7 @@ export default function EditarProdutoPage() {
                   type="text"
                   className={cn(
                     "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
-                    errors.includes("concentration") && "border-2 border-red-500"
+                    errors.includes("concentration") ? "border-2 border-red-500" : ""
                   )}
                   value={formData.concentration}
                   onChange={e => setFormData({...formData, concentration: e.target.value})}
@@ -435,7 +435,7 @@ export default function EditarProdutoPage() {
                       type="text"
                       className={cn(
                         "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
-                        errors.includes("notes-top") && "border-2 border-red-500"
+                        errors.includes("notes-top") ? "border-2 border-red-500" : ""
                       )}
                       value={formData.olfactoryNotes?.top}
                       onChange={e => setFormData({
@@ -451,7 +451,7 @@ export default function EditarProdutoPage() {
                       type="text"
                       className={cn(
                         "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
-                        errors.includes("notes-heart") && "border-2 border-red-500"
+                        errors.includes("notes-heart") ? "border-2 border-red-500" : ""
                       )}
                       value={formData.olfactoryNotes?.heart}
                       onChange={e => setFormData({
@@ -467,7 +467,7 @@ export default function EditarProdutoPage() {
                       type="text"
                       className={cn(
                         "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
-                        errors.includes("notes-base") && "border-2 border-red-500"
+                        errors.includes("notes-base") ? "border-2 border-red-500" : ""
                       )}
                       value={formData.olfactoryNotes?.base}
                       onChange={e => setFormData({
@@ -510,7 +510,7 @@ export default function EditarProdutoPage() {
                   type="text"
                   className={cn(
                     "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
-                    errors.includes("finish") && "border-2 border-red-500"
+                    errors.includes("finish") ? "border-2 border-red-500" : ""
                   )}
                   value={formData.finish}
                   onChange={e => setFormData({...formData, finish: e.target.value})}
@@ -537,7 +537,7 @@ export default function EditarProdutoPage() {
                   type="text"
                   className={cn(
                     "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
-                    errors.includes("dimensions") && "border-2 border-red-500"
+                    errors.includes("dimensions") ? "border-2 border-red-500" : ""
                   )}
                   value={formData.dimensions}
                   onChange={e => setFormData({...formData, dimensions: e.target.value})}

@@ -4,7 +4,7 @@ import { useCartStore } from "@/store/cartStore";
 import { formatCurrency } from "@/lib/utils";
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/useToast";
 
 export default function SacolaPage() {
@@ -12,6 +12,11 @@ export default function SacolaPage() {
   const { showToast, ToastContainer } = useToast();
   const [showModal, setShowModal] = useState(false);
   const [userName, setUserName] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleCheckout = () => {
     if (!userName.trim()) {
@@ -35,22 +40,33 @@ export default function SacolaPage() {
     setShowModal(false);
   };
 
+  if (!isMounted) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 pt-40 pb-20 text-center min-h-screen">
+        <div className="animate-pulse">
+          <ShoppingBag size={48} className="mx-auto mb-6 text-gray-200 dark:text-gray-700" />
+          <p className="text-gray-400 uppercase text-[10px] tracking-widest">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (cart.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-6 py-40 text-center min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 pt-40 pb-20 text-center min-h-screen">
         <ToastContainer />
         <ShoppingBag size={48} className="mx-auto mb-6 text-gray-200 dark:text-gray-700" />
         <h1 className="text-3xl font-serif mb-4 dark:text-white">Sua sacola está vazia</h1>
         <p className="text-gray-400 mb-12 uppercase text-[10px] tracking-widest">Explore nossa coleção e encontre algo especial.</p>
-        <Link href="/produtos" className="inline-block bg-black dark:bg-white dark:text-black text-white px-12 py-5 uppercase text-[10px] tracking-widest hover:bg-gold dark:hover:bg-gold hover:text-white transition-luxury">
-          Voltar para a Loja
+        <Link href="/" className="inline-block bg-black dark:bg-white dark:text-black text-white px-12 py-5 uppercase text-[10px] tracking-widest hover:bg-gold dark:hover:bg-gold hover:text-white transition-luxury">
+          Voltar para a Home
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20 min-h-screen">
+    <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen">
       <ToastContainer />
       <h1 className="text-4xl font-serif mb-16 text-center dark:text-white">Sua Sacola</h1>
 

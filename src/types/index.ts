@@ -2,7 +2,7 @@ export type Category = 'perfumes' | 'joias';
 export type PerfumeIntensity = 'Suave' | 'Moderada' | 'Intensa';
 export type Occasion = 'Dia a dia' | 'Trabalho' | 'Noite' | 'Eventos especiais';
 export type Style = 'Elegante' | 'Moderno' | 'Clássico' | 'Ousado';
-export type JewelryMaterial = 'Ouro' | 'Prata' | 'Ouro Rose' | 'Aço Inoxidável' | 'Banho de Ouro';
+export type JewelryMaterial = 'Ouro' | 'Prata' | 'Ouro Rose' | 'Aço Inoxidável' | 'Banho de Ouro' | 'Platina';
 export type PerfumeFixation = 'Fraca' | 'Moderada' | 'Forte' | 'Muito Forte';
 
 export interface Product {

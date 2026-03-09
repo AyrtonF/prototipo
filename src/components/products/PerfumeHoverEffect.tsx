@@ -11,7 +11,7 @@ export default function PerfumeHoverEffect({ product }: PerfumeHoverEffectProps)
   // Define a cor da névoa com base na tag principal
   const getAromaColor = () => {
     const tags = product.tags || [];
-    if (tags.includes("Amadeirado")) return "from-amber-500/20";
+    if (tags.includes("Amadeirado")) return "from-gold/20";
     if (tags.includes("Floral")) return "from-rose-400/20";
     if (tags.includes("Cítrica")) return "from-cyan-400/20";
     if (tags.includes("Oriental")) return "from-purple-500/20";

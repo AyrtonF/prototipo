@@ -18,7 +18,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
   if (!product) return notFound();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20 min-h-screen">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 pb-12 sm:pb-20 min-h-screen">
       {/* Breadcrumbs */}
       <nav className="flex items-center space-x-2 text-[10px] tracking-widest uppercase text-gray-400 mb-8 sm:mb-12 overflow-x-auto whitespace-nowrap">
         <a href="/" className="hover:text-black dark:hover:text-white transition-colors">Home</a>
@@ -51,7 +51,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
                   onClick={() => setActiveImage(idx)}
                   className={`aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-800 border-2 rounded-xl transition-all ${
                     activeImage === idx 
-                      ? 'border-amber-600 ring-2 ring-amber-500/20' 
+                      ? 'border-gold ring-2 ring-gold/20' 
                       : 'border-transparent hover:border-zinc-300 dark:hover:border-zinc-700'
                   }`}
                 >
@@ -64,7 +64,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
 
         {/* Details */}
         <div className="flex flex-col animate-fade-in-up">
-          <span className="text-xs tracking-[0.3em] uppercase text-amber-600 font-bold mb-4">
+          <span className="text-xs tracking-[0.3em] uppercase text-gold font-bold mb-4">
             {product.category === 'joias' ? 'Semi-Joia Fina' : 'Parfum Exclusivo'}
           </span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif mb-4 sm:mb-6 dark:text-white leading-tight">
@@ -171,7 +171,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
                 <ul className="space-y-3">
                   {product.details.map((detail, i) => (
                     <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex items-start space-x-3">
-                      <span className="w-1.5 h-1.5 bg-amber-600 rounded-full mt-2 shrink-0" />
+                      <span className="w-1.5 h-1.5 bg-gold rounded-full mt-2 shrink-0" />
                       <span>{detail}</span>
                     </li>
                   ))}
@@ -183,7 +183,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
           <button 
             onClick={() => addToCart(product)}
             disabled={product.stock <= 0}
-            className="w-full bg-black dark:bg-white dark:text-black text-white py-5 sm:py-6 uppercase text-xs tracking-[0.3em] font-bold hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white transition-all flex items-center justify-center space-x-4 mb-12 sm:mb-16 rounded-2xl shadow-xl hover:shadow-amber-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-black dark:bg-white dark:text-black text-white py-5 sm:py-6 uppercase text-xs tracking-[0.3em] font-bold hover:bg-gold dark:hover:bg-gold hover:text-white transition-all flex items-center justify-center space-x-4 mb-12 sm:mb-16 rounded-2xl shadow-xl hover:shadow-gold/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingBag size={18} />
             <span>{product.stock > 0 ? 'Adicionar à Sacola' : 'Indisponível'}</span>
@@ -193,7 +193,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
           {product.category === 'perfumes' && product.olfactoryNotes && (
             <div className="bg-zinc-50 dark:bg-zinc-900 p-6 sm:p-12 space-y-6 sm:space-y-8 rounded-3xl border border-gray-100 dark:border-zinc-800">
               <div className="flex items-center space-x-4 mb-4">
-                <Droplets className="text-amber-600" />
+                <Droplets className="text-gold" />
                 <h3 className="text-lg font-serif dark:text-white">Pirâmide Olfativa</h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 relative">
@@ -201,15 +201,15 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
                 <div className="hidden sm:block absolute top-4 left-0 w-full h-px bg-gray-200 dark:bg-zinc-700 z-0" />
                 
                 <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900 sm:pr-4">
-                  <span className="text-[10px] tracking-widest uppercase text-amber-600 font-bold block mb-2">Topo (Saída)</span>
+                  <span className="text-[10px] tracking-widest uppercase text-gold font-bold block mb-2">Topo (Saída)</span>
                   <p className="text-sm dark:text-gray-300">{product.olfactoryNotes.top}</p>
                 </div>
                 <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900 sm:px-2">
-                  <span className="text-[10px] tracking-widest uppercase text-amber-600 font-bold block mb-2">Coração (Corpo)</span>
+                  <span className="text-[10px] tracking-widest uppercase text-gold font-bold block mb-2">Coração (Corpo)</span>
                   <p className="text-sm dark:text-gray-300">{product.olfactoryNotes.heart}</p>
                 </div>
                 <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900 sm:pl-4">
-                  <span className="text-[10px] tracking-widest uppercase text-amber-600 font-bold block mb-2">Fundo (Base)</span>
+                  <span className="text-[10px] tracking-widest uppercase text-gold font-bold block mb-2">Fundo (Base)</span>
                   <p className="text-sm dark:text-gray-300">{product.olfactoryNotes.base}</p>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
           {product.category === 'joias' && (
             <div className="bg-zinc-50 dark:bg-zinc-900 p-6 sm:p-12 space-y-6 sm:space-y-8 rounded-3xl border border-gray-100 dark:border-zinc-800">
               <div className="flex items-center space-x-4 mb-4">
-                <Diamond className="text-amber-600" />
+                <Diamond className="text-gold" />
                 <h3 className="text-lg font-serif dark:text-white">Especificações Técnicas</h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">

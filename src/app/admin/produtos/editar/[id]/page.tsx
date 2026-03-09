@@ -143,9 +143,9 @@ export default function EditarProdutoPage() {
 
   if (isLoading) {
     return (
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-12 sm:pb-20 min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-zinc-500 dark:text-zinc-400">Carregando produto...</p>
         </div>
       </div>
@@ -153,7 +153,7 @@ export default function EditarProdutoPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-12 sm:pb-20 min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <ToastContainer />
       
       <Link href="/admin" className="inline-flex items-center text-zinc-500 hover:text-black dark:hover:text-white mb-8 sm:mb-12 transition-colors uppercase text-[10px] tracking-widest font-bold">
@@ -162,7 +162,7 @@ export default function EditarProdutoPage() {
       </Link>
 
       <div className="flex items-center space-x-4 mb-8 sm:mb-12">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br bg-gold rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
           <Edit size={20} className="sm:w-6 sm:h-6" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-serif dark:text-white">Editar Produto</h1>
@@ -174,12 +174,12 @@ export default function EditarProdutoPage() {
         <div className="bg-white dark:bg-zinc-900 p-6 sm:p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-serif dark:text-white flex items-center">
-              <ImageIcon size={20} className="mr-2 text-amber-600" /> Imagens do Produto
+              <ImageIcon size={20} className="mr-2 text-gold" /> Imagens do Produto
             </h2>
             <button
               type="button"
               onClick={addImageSlot}
-              className="px-4 py-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+              className="px-4 py-2 bg-gold text-white rounded-xl hover:bg-gold transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-2"
             >
               <Plus size={16} />
               Adicionar Imagem
@@ -224,7 +224,7 @@ export default function EditarProdutoPage() {
                   <input 
                     type="text"
                     className={cn(
-                      "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white text-sm",
+                      "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-gold transition-all dark:text-white text-sm",
                       errors.includes(`img${index}`) ? "border-2 border-red-500" : ""
                     )}
                     placeholder="Cole URL da imagem..."
@@ -239,10 +239,10 @@ export default function EditarProdutoPage() {
                   <button
                     type="button"
                     onClick={() => fileInputs.current[index]?.click()}
-                    className="w-full px-4 py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl hover:bg-amber-50 dark:hover:bg-zinc-700 hover:border-amber-500 border-2 border-transparent transition-all flex items-center justify-center gap-3 group"
+                    className="w-full px-4 py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl hover:bg-gold/10 dark:hover:bg-zinc-700 hover:border-gold border-2 border-transparent transition-all flex items-center justify-center gap-3 group"
                   >
-                    <Upload size={18} className="text-zinc-600 dark:text-zinc-400 group-hover:text-amber-600" />
-                    <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400 group-hover:text-amber-600">
+                    <Upload size={18} className="text-zinc-600 dark:text-zinc-400 group-hover:text-gold" />
+                    <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400 group-hover:text-gold">
                       Carregar do Dispositivo
                     </span>
                   </button>
@@ -270,7 +270,7 @@ export default function EditarProdutoPage() {
               <input 
                 type="text"
                 className={cn(
-                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white font-serif text-lg",
+                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold transition-all dark:text-white font-serif text-lg",
                   errors.includes("name") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.name}
@@ -282,7 +282,7 @@ export default function EditarProdutoPage() {
             <div>
               <label className="text-[9px] uppercase tracking-widest text-zinc-400 block mb-2 font-bold">Categoria *</label>
               <select 
-                className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white appearance-none uppercase text-xs font-bold tracking-widest"
+                className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold transition-all dark:text-white appearance-none uppercase text-xs font-bold tracking-widest"
                 value={formData.category}
                 onChange={e => setFormData({...formData, category: e.target.value as Category})}
               >
@@ -298,7 +298,7 @@ export default function EditarProdutoPage() {
                 min="0"
                 step="0.01"
                 className={cn(
-                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white",
+                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold transition-all dark:text-white",
                   errors.includes("price") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.price}
@@ -312,7 +312,7 @@ export default function EditarProdutoPage() {
                 type="number"
                 min="0"
                 className={cn(
-                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white",
+                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold transition-all dark:text-white",
                   errors.includes("stock") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.stock}
@@ -325,7 +325,7 @@ export default function EditarProdutoPage() {
               <textarea 
                 rows={4}
                 className={cn(
-                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all dark:text-white text-sm resize-none",
+                  "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold transition-all dark:text-white text-sm resize-none",
                   errors.includes("description") ? "border-2 border-red-500" : ""
                 )}
                 value={formData.description}
@@ -352,7 +352,7 @@ export default function EditarProdutoPage() {
                   value={tagInput}
                   onChange={e => setTagInput(e.target.value)}
                   onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                  className="flex-1 bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                  className="flex-1 bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm"
                   placeholder={formData.category === "perfumes" 
                     ? "Ex: Amadeirado, Intenso..." 
                     : "Ex: Elegante, Minimalista..."}
@@ -360,7 +360,7 @@ export default function EditarProdutoPage() {
                 <button
                   type="button"
                   onClick={addTag}
-                  className="px-4 py-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-colors"
+                  className="px-4 py-2 bg-gold text-white rounded-xl hover:bg-gold transition-colors"
                 >
                   <Plus size={18} />
                 </button>
@@ -388,7 +388,7 @@ export default function EditarProdutoPage() {
               <div>
                 <label className="text-[9px] uppercase tracking-widest text-zinc-400 block mb-2 font-bold">Intensidade *</label>
                 <select 
-                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm"
                   value={formData.intensity}
                   onChange={e => setFormData({...formData, intensity: e.target.value as PerfumeIntensity})}
                 >
@@ -401,7 +401,7 @@ export default function EditarProdutoPage() {
               <div>
                 <label className="text-[9px] uppercase tracking-widest text-zinc-400 block mb-2 font-bold">Fixação *</label>
                 <select 
-                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm"
                   value={formData.fixation}
                   onChange={e => setFormData({...formData, fixation: e.target.value as PerfumeFixation})}
                 >
@@ -417,7 +417,7 @@ export default function EditarProdutoPage() {
                 <input 
                   type="text"
                   className={cn(
-                    "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
+                    "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm",
                     errors.includes("concentration") ? "border-2 border-red-500" : ""
                   )}
                   value={formData.concentration}
@@ -434,7 +434,7 @@ export default function EditarProdutoPage() {
                     <input 
                       type="text"
                       className={cn(
-                        "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
+                        "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm",
                         errors.includes("notes-top") ? "border-2 border-red-500" : ""
                       )}
                       value={formData.olfactoryNotes?.top}
@@ -450,7 +450,7 @@ export default function EditarProdutoPage() {
                     <input 
                       type="text"
                       className={cn(
-                        "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
+                        "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm",
                         errors.includes("notes-heart") ? "border-2 border-red-500" : ""
                       )}
                       value={formData.olfactoryNotes?.heart}
@@ -466,7 +466,7 @@ export default function EditarProdutoPage() {
                     <input 
                       type="text"
                       className={cn(
-                        "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
+                        "w-full bg-zinc-50 dark:bg-zinc-800 p-3 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm",
                         errors.includes("notes-base") ? "border-2 border-red-500" : ""
                       )}
                       value={formData.olfactoryNotes?.base}
@@ -492,7 +492,7 @@ export default function EditarProdutoPage() {
               <div>
                 <label className="text-[9px] uppercase tracking-widest text-zinc-400 block mb-2 font-bold">Material *</label>
                 <select 
-                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm"
                   value={formData.material}
                   onChange={e => setFormData({...formData, material: e.target.value as JewelryMaterial})}
                 >
@@ -509,7 +509,7 @@ export default function EditarProdutoPage() {
                 <input 
                   type="text"
                   className={cn(
-                    "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
+                    "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm",
                     errors.includes("finish") ? "border-2 border-red-500" : ""
                   )}
                   value={formData.finish}
@@ -524,7 +524,7 @@ export default function EditarProdutoPage() {
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                  className="w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm"
                   value={formData.weight}
                   onChange={e => setFormData({...formData, weight: Number(e.target.value)})}
                   placeholder="Ex: 15.5"
@@ -536,7 +536,7 @@ export default function EditarProdutoPage() {
                 <input 
                   type="text"
                   className={cn(
-                    "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm",
+                    "w-full bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl outline-none focus:ring-2 focus:ring-gold dark:text-white text-sm",
                     errors.includes("dimensions") ? "border-2 border-red-500" : ""
                   )}
                   value={formData.dimensions}
@@ -558,7 +558,7 @@ export default function EditarProdutoPage() {
           </Link>
           <button 
             type="submit"
-            className="bg-black dark:bg-white dark:text-black text-white px-12 py-4 rounded-full flex items-center justify-center space-x-3 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white transition-all shadow-xl font-bold uppercase text-xs tracking-widest"
+            className="bg-black dark:bg-white dark:text-black text-white px-12 py-4 rounded-full flex items-center justify-center space-x-3 hover:bg-gold dark:hover:bg-gold hover:text-white transition-all shadow-xl font-bold uppercase text-xs tracking-widest"
           >
             <Save size={18} />
             <span>Atualizar Produto</span>

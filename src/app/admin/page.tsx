@@ -22,7 +22,7 @@ export default function AdminPage() {
   }, [products, searchTerm, filterCat, filterStock]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20 min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
         <div>
           <h1 className="text-4xl font-serif dark:text-white mb-2">Gestão de Inventário</h1>

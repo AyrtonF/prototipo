@@ -30,9 +30,9 @@ export default function JoiasPage() {
   };
 
   return (
-    <div className="max-w-400 mx-auto px-4 sm:px-6 py-12 sm:py-20 min-h-screen">
+    <div className="max-w-400 mx-auto px-4 sm:px-6 pt-32 pb-12 sm:pb-20 min-h-screen">
       <header className="mb-12 sm:mb-20 text-center animate-fade-in-up">
-        <span className="text-xs tracking-[0.4em] uppercase text-amber-600 font-bold block mb-4">Design Atemporal</span>
+        <span className="text-xs tracking-[0.4em] uppercase text-gold font-bold block mb-4">Design Atemporal</span>
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif mb-6 dark:text-white">Semi-Joias</h1>
         <p className="text-gray-500 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
           Peças que brilham com você, unindo design contemporâneo e acabamento de alta joalheria.
@@ -46,7 +46,7 @@ export default function JoiasPage() {
             onClick={() => setShowFilters(!showFilters)}
             className="w-full flex items-center justify-center gap-3 bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm"
           >
-            <SlidersHorizontal size={18} className="text-amber-600" />
+            <SlidersHorizontal size={18} className="text-gold" />
             <span className="font-bold text-sm uppercase tracking-widest">
               {showFilters ? 'Ocultar Filtros' : 'Mostrar Filtros'}
             </span>
@@ -63,7 +63,7 @@ export default function JoiasPage() {
               <h3 className="font-serif text-xl dark:text-white">Filtros</h3>
               <button
                 onClick={resetFilters}
-                className="text-xs text-zinc-500 hover:text-amber-600 transition-colors uppercase tracking-widest font-bold"
+                className="text-xs text-zinc-500 hover:text-gold transition-colors uppercase tracking-widest font-bold"
               >
                 Limpar
               </button>
@@ -76,7 +76,7 @@ export default function JoiasPage() {
                 <input 
                   type="text"
                   placeholder="Buscar por nome..."
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-500 dark:text-white transition-all"
+                  className="w-full pl-10 pr-4 py-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-gold dark:text-white transition-all"
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
                 />
@@ -100,7 +100,7 @@ export default function JoiasPage() {
                       onClick={() => setMaterial(val)}
                       className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all ${
                         material === val 
-                          ? 'bg-linear-to-r from-amber-400 to-amber-600 text-white shadow-lg shadow-amber-500/30' 
+                          ? 'bg-gold text-white shadow-lg shadow-gold/30' 
                           : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-700'
                       }`}
                     >
@@ -114,7 +114,7 @@ export default function JoiasPage() {
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-[9px] uppercase tracking-widest text-zinc-400 font-bold">Preço Máximo</span>
-                  <span className="text-xs font-bold text-amber-600">
+                  <span className="text-xs font-bold text-gold">
                     {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(priceRange)}
                   </span>
                 </div>
@@ -125,7 +125,7 @@ export default function JoiasPage() {
                   step="500"
                   value={priceRange}
                   onChange={e => setPriceRange(Number(e.target.value))}
-                  className="w-full h-2 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-amber-600"
+                  className="w-full h-2 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-gold"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-400 mt-2">
                   <span>R$ 500</span>
@@ -136,7 +136,7 @@ export default function JoiasPage() {
               {/* Results Count */}
               <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800">
                 <p className="text-sm text-zinc-500 dark:text-zinc-400 text-center">
-                  <span className="font-bold text-amber-600">{filteredJoias.length}</span>
+                  <span className="font-bold text-gold">{filteredJoias.length}</span>
                   {' '}
                   {filteredJoias.length === 1 ? 'produto encontrado' : 'produtos encontrados'}
                 </p>
@@ -158,7 +158,7 @@ export default function JoiasPage() {
               </p>
               <button
                 onClick={resetFilters}
-                className="px-8 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors font-bold uppercase text-xs tracking-widest"
+                className="px-8 py-3 bg-gold text-white rounded-full hover:opacity-90 transition-all font-bold uppercase text-xs tracking-widest"
               >
                 Limpar Filtros
               </button>

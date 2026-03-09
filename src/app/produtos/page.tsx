@@ -22,7 +22,7 @@ function ProductListContent() {
   }, [selectedCategory, priceRange, products]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20 min-h-screen">
+    <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen">
       <header className="mb-20 text-center animate-fade-in-up">
         <span className="text-xs tracking-[0.4em] uppercase text-gold font-bold block mb-4">Curadoria Completa</span>
         <h1 className="text-5xl md:text-7xl font-serif mb-6 dark:text-white">Nossa Coleção</h1>
@@ -39,29 +39,29 @@ function ProductListContent() {
             
             <div className="space-y-8">
               <div>
-                <span className="text-[10px] tracking-widest uppercase text-gray-400 block mb-4 font-bold">Categoria</span>
-                <div className="flex flex-col space-y-4 text-xs tracking-widest uppercase">
+                <span className="text-[9px] tracking-widest uppercase text-zinc-400 block mb-4 font-bold">Categoria</span>
+                <div className="flex flex-col space-y-2">
                   {['todos', 'perfumes', 'joias'].map(cat => (
                     <button 
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`text-left transition-luxury relative group w-fit ${
+                      className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all text-left ${
                         selectedCategory === cat 
-                          ? 'text-gold font-bold' 
-                          : 'text-gray-500 hover:text-black dark:hover:text-white'
+                          ? 'bg-gold text-white shadow-lg shadow-gold/30' 
+                          : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-700'
                       }`}
                     >
                       {cat === 'todos' ? 'Ver Tudo' : cat === 'joias' ? 'Semi-Joias' : 'Perfumes'}
-                      <span className={`absolute -bottom-1 left-0 h-[1px] bg-gold transition-transform duration-300 ${
-                        selectedCategory === cat ? 'w-full scale-x-100' : 'w-full scale-x-0 group-hover:scale-x-100'
-                      }`} />
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <span className="text-[10px] tracking-widest uppercase text-gray-400 block mb-4 font-bold">Preço Máximo</span>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-[9px] tracking-widest uppercase text-zinc-400 font-bold">Preço Máximo</span>
+                  <span className="text-xs font-bold text-gold">R$ {priceRange}</span>
+                </div>
                 <input 
                   type="range" 
                   min="0" 
@@ -69,11 +69,11 @@ function ProductListContent() {
                   step="50"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
-                  className="w-full accent-gold h-1 bg-gray-100 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer"
+                  className="w-full h-2 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-gold"
                 />
-                <div className="flex justify-between mt-4 text-[10px] tracking-widest text-gray-400 uppercase font-bold">
+                <div className="flex justify-between text-[10px] text-zinc-400 mt-2">
                   <span>R$ 0</span>
-                  <span className="text-black dark:text-white">R$ {priceRange}</span>
+                  <span>R$ 1.000</span>
                 </div>
               </div>
             </div>

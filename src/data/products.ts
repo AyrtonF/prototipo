@@ -10,8 +10,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "A essência da feminilidade. Um buquê floral aldeídico lendário.",
     images: [
-      "https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=1000&auto=format&fit=crop"
+      "https://www.chanel.com/images/t_one/w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_1240/n-5-eau-de-parfum-spray-3-4fl-oz--packshot-default-125530-9564912943134.jpg",
+      "https://cdn.awsli.com.br/600x700/2643/2643166/produto/236950674/n--5-chanel-paris---eau-de-parfum-feminino-100ml---56zjuf21s8.png"
     ],
     stock: 15,
     details: ["Extrato de perfume", "Frasco icônico", "Notas de Neroli e Baunilha"],
@@ -29,8 +29,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "Uma composição radicalmente fresca, bruta e nobre ao mesmo tempo.",
     images: [
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1588405748353-0574ad299491?q=80&w=1000&auto=format&fit=crop"
+      "https://acdn-us.mitiendanube.com/stores/001/066/168/products/whatsapp-image-2022-07-11-at-14-44-401-77d1f48d462b93ae7316575616055975-640-0.webp",
+      "https://cdn.awsli.com.br/2500x2500/2429/2429224/produto/230492928/1920-ecpzxipfhm.jpg"
     ],
     stock: 22,
     details: ["Eau de Parfum", "Vaporizador de viagem", "Notas de Bergamota e Âmbar"],
@@ -48,8 +48,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "Um elogio à liberdade masculina em uma fragrância aromática-amadeirada.",
     images: [
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1616949755610-8c9ad0e2717d?q=80&w=1000&auto=format&fit=crop"
+      "https://acdn-us.mitiendanube.com/stores/001/066/168/products/bleu_de_chanel_eau_de_parfum_100ml_219287743_2_e35476fba22ead6af92840ac28f8f972-2a44849dc4a2ee408417313519043814-640-0.webp",
+      "https://a-static.mlcdn.com.br/%7Bw%7Dx%7Bh%7D/perfume-miniatura-bleu-chanel-eau-de-parfum-15ml-masculino/oliststore/mglc65bvo06fjhy6/35c14211b9f3e04b624064942e350190.jpeg"
     ],
     stock: 10,
     details: ["Eau de Toilette", "Design minimalista", "Aromático intenso"],
@@ -67,8 +67,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "Inspirado pela vida dramática de um imperador histórico que celebrou força e sucesso.",
     images: [
-      "https://images.unsplash.com/photo-1615160037565-5c5f4705500e?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1615396899839-a9927cf422d3?q=80&w=1000&auto=format&fit=crop"
+      "https://cdn.sistemawbuy.com.br/arquivos/a48e76d3b4ff8b6e919e194fd7dfcfed/uploads/images/creed-classics-aventus-4x5-1-696e227827ca81.jpg",
+      "https://cdn.awsli.com.br/2500x2500/1851/1851229/produto/120119669/176277f30d.jpg"
     ],
     stock: 4,
     details: ["Millesime", "Ingredientes raros", "Símbolo de poder"],
@@ -86,8 +86,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "Uma declaração universal à beleza da vida.",
     images: [
-      "https://images.unsplash.com/photo-1585232004423-244e0e6904e3?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605651202774-7d5637b5e2af?q=80&w=1000&auto=format&fit=crop"
+      "https://cdn.sistemawbuy.com.br/arquivos/feb5eb39b3a2004abcc3bcd79041ba64/produtos/649ccf10d1809/20230628212349-649ccf15a6188.jpg",
+      "https://panvelprd.vteximg.com.br/arquivos/ids/202173"
     ],
     stock: 18,
     details: ["Eau de Parfum", "Frasco sorriso de cristal", "Iris Pallida"],
@@ -105,8 +105,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "É tão bom ser má. Uma fragrância poderosa e sensual.",
     images: [
-      "https://images.unsplash.com/photo-1592914610354-fd354ea45e48?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1594125311687-3b1b3e560dbd?q=80&w=1000&auto=format&fit=crop"
+      "https://http2.mlstatic.com/D_NQ_NP_697280-MLA79482290013_092024-O.webp",
+      "https://images.tcdn.com.br/img/img_prod/1323238/perfume_feminino_eau_de_parfum_good_girl_carolina_herrera_80ml_5845_1_7d0f9094b75344333e5c9e46cdd29bf4.jpg"
     ],
     stock: 3,
     details: ["Frasco Stiletto", "Tuberosa e Fava Tonka", "Design de luxo"],
@@ -124,8 +124,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "A liberdade de viver tudo com excesso.",
     images: [
-      "https://images.unsplash.com/photo-1610461888750-10bfc601b874?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1613521140785-e85e427f8002?q=80&w=1000&auto=format&fit=crop"
+      "https://stg-global-ysl.dw-sites-intl.com/on/demandware.static/-/Sites-ysl-master-catalog/default/dwfa66aa60/pdp/WW-50424YSL/pdp-sec03-img-desk.jpg",
+      "https://panvelprd.vteximg.com.br/arquivos/ids/190628"
     ],
     stock: 12,
     details: ["Lavanda Floral", "Frasco Couture", "Logotipo Cassandre"],
@@ -143,8 +143,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "O perfume que interpreta a masculinidade sublime através de uma aura luminosa.",
     images: [
-      "https://images.unsplash.com/photo-1615396899839-a9927cf422d3?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?q=80&w=1000&auto=format&fit=crop"
+      "https://dz9gx61wwkybv.cloudfront.net/Custom/Content/Products/18/64/18647_perfume-versace-eros-masculino-parfum-pr-7997-8011003877904_l5_638938823058491782.webp",
+      "https://leloynparfums.com.br/cdn/shop/files/PRODUTOSLELOYN_48_36855362-4a55-4165-b2d7-d554c595f176.png?v=1769570919&width=1024"
     ],
     stock: 20,
     details: ["Menta e Maçã Verde", "Design Medusa", "Fresco oriental"],
@@ -162,8 +162,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "A essência do Mediterrâneo em uma fragrância aquática.",
     images: [
-      "https://images.unsplash.com/photo-1595425964071-b3b0d2d6c975?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1563170351-be82bc888aa4?q=80&w=1000&auto=format&fit=crop"
+      "https://cdn.sistemawbuy.com.br/arquivos/feb5eb39b3a2004abcc3bcd79041ba64/produtos/6420bc5b8d546/20230326184256-6420bc60c5af3.jpg",
+      "https://lebiscuit.vtexassets.com/arquivos/ids/19063941-600-600/17264952103387.jpg?v=638633342619900000&width=400&height=400&format=webp&quality=75"
     ],
     stock: 15,
     details: ["Notas marinhas", "Frescor atemporal", "Frasco fosco"],
@@ -181,8 +181,8 @@ export const initialProducts: Product[] = [
     category: "perfumes",
     description: "Uma fragrância aromática gourmand liderada por um trio poderoso de baunilhas.",
     images: [
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1557170334-a9632e77c6e4?q=80&w=1000&auto=format&fit=crop"
+      "https://cdn.vnda.com.br/950x/delmondostore/2024/09/12/18_47_45_184_18_9_7_788_burberry_goddessintense_02.jpg?v=1726177665",
+      "https://preview.redd.it/disappointed-goddess-burberry-different-from-what-i-tested-v0-z2xwahxjjebe1.jpeg?auto=webp&s=cda0188a4dafc57dfe34fc111d4a04da130f6d64"
     ],
     stock: 6,
     details: ["Refilável", "Baunilha Infusion", "Elegância britânica"],
@@ -202,8 +202,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "Um ícone gráfico da Tiffany, este pingente é elegante e moderno.",
     images: [
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1000&auto=format&fit=crop"
+      "https://www.crownjewelersnyc.com/cdn/shop/files/20241127_130858_1401919.jpg?v=1732743297",
+      "https://tiffany.vtexassets.com/arquivos/ids/171912/colar-tiffany-t-smile-em-ouro-branco-com-diamantes-67513312_4.jpg?v=638285957027630000"
     ],
     stock: 2,
     details: ["Ouro 18k", "Corrente ajustável", "Design minimalista"],
@@ -221,8 +221,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "Um símbolo de amor eterno, a pulseira Love é o ícone absoluto da joalheria.",
     images: [
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1573408302185-924b75c7423c?q=80&w=1000&auto=format&fit=crop"
+      "https://jadorecouture.ca/cdn/shop/products/PhotoRoom_20230331_143433.jpg?v=1728488759",
+      "https://img.chrono24.com/images/uhren/44575059-pm1siszgf2ig6txe2foaicvd-ExtraLarge.jpg"
     ],
     stock: 1,
     details: ["Parafusos icônicos", "Sistema de fechamento único", "Ouro Rosa"],
@@ -234,14 +234,14 @@ export const initialProducts: Product[] = [
   },
   {
     id: "j3",
-    name: "BVLGARI B.zero1",
-    slug: "bvlgari-bzero1",
+    name: "Tiffany T1 Ring",
+    slug: "tiffany-t1-ring",
     price: 18900.00,
     category: "joias",
-    description: "Inspirado no anfiteatro mais famoso do mundo, o Coliseu.",
+    description: "Anel icônico Tiffany T1 em ouro 18k, símbolo de força e elegância contemporânea.",
     images: [
-      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=1000&auto=format&fit=crop"
+      "https://media.tiffany.com/is/image/Tiffany/EcomItemL2/tiffany-tt1-ring-67795121_1010332_ED.jpg?&op_usm=1.75,1.0,6.0&$cropN=0.1,0.1,0.8,0.8&defaultImage=NoImageAvailableInternal&",
+      "https://www.tiffany.ae/media/catalog/product/cache/46a956959a004a49ac6cd6becd157f77/5/2/52f85bf3342640be46033bfd7c0db283.jpg"
     ],
     stock: 3,
     details: ["Design espiral", "Ouro e Cerâmica Branca", "Clássico italiano"],
@@ -259,8 +259,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "A pulseira clássica para colecionar suas histórias.",
     images: [
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1000&auto=format&fit=crop"
+      "https://img.sofia.sk/mediagallery/sofia_system/image/product/types/Xw/2/3/5/45532-pandora-moments-naramok-so-zirkonovym-zapinanim-m-590038c01.webp",
+      "https://pandorajoias.vtexassets.com/arquivos/ids/187417/PNGTRPNT_SS22_A_Feb_Val_giftset_03_RGB--99-.png?v=638816088923030000"
     ],
     stock: 45,
     details: ["Prata 925", "Fecho barril", "Personalizável"],
@@ -278,8 +278,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "O símbolo do infinito adornado com cristais brilhantes.",
     images: [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1630019019620-658519702844?q=80&w=1000&auto=format&fit=crop"
+      "https://swarovski.vtexassets.com/arquivos/ids/193552/Name_3555.jpg?v=637814268419770000",
+      "https://cdn.brandfield.com/media/catalog/product/cache/2148b6ececc229623c3ab7d3f3406f16/s/w/swarovski-infinity-ketting--oneindigheidssymbool-en-hart--wit--gemengde-metaalafwerking-swarovski-5518865_1__uftlriczmbxi3yyd.jpg"
     ],
     stock: 12,
     details: ["Cristais lapidados", "Banho de Ródio", "Brilho intenso"],
@@ -297,8 +297,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "Pérolas Akoya selecionadas montadas em ouro 18k.",
     images: [
-      "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?q=80&w=1000&auto=format&fit=crop"
+      "https://joiasgold.vteximg.com.br/arquivos/ids/212109-1000-1000/Brinco-de-Ouro-18K-Perola-Modelo-Gota-Pendurada-70mm-br20223-Joias-gold.jpg?v=637176394878030000",
+      "https://joiasgold.vteximg.com.br/arquivos/ids/212110-1000-1000/Brinco-de-Ouro-18K-Perola-Modelo-Gota-Pendurada-70mm-br20223-Joias-gold-modelo.jpg?v=637176396150930000"
     ],
     stock: 8,
     details: ["Pérolas Naturais 8mm", "Pino em Ouro", "Clássico eterno"],
@@ -310,19 +310,19 @@ export const initialProducts: Product[] = [
   },
   {
     id: "j7",
-    name: "Anel Diamante Solitário",
-    slug: "anel-solitario",
+    name: "Tiffany Setting Diamond Solitaire Ring",
+    slug: "tiffany-setting-solitaire-ring",
     price: 15800.00,
     category: "joias",
-    description: "O anel de noivado clássico com diamante de 1 quilate.",
+    description: "Anel clássico de diamante solitário com diamante lapidação brilhante em montagem de seis garras.",
     images: [
-      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=1000&auto=format&fit=crop"
+      "https://media.tiffany.com/is/image/tco/40318486_RG_MAIN1X1",
+      "https://www.beladora.com/cdn/shop/files/product-image-505296-2.jpg?v=1734127485&width=1445"
     ],
     stock: 2,
-    details: ["Diamante VVS1", "Certificado GIA", "Ouro Branco"],
-    tags: ["Anel", "Ouro", "Diamante"],
-    material: "Ouro",
+    details: ["Diamante VVS1", "Certificado GIA", "Platina"],
+    tags: ["Anel", "Platina", "Diamante"],
+    material: "Platina",
     finish: "Polido",
     weight: 4.5,
     dimensions: "Tamanho 14"
@@ -335,8 +335,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "Pulseira elos portugueses com pingentes de sorte.",
     images: [
-      "https://images.unsplash.com/photo-1573408302185-924b75c7423c?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1000&auto=format&fit=crop"
+      "https://ak1.ostkcdn.com/images/products/is/images/direct/a4f1d88df72cdf93651c9f35cb17a2f64bfaba5c/Miadora-Five-Heart-Charm-Station-Bracelet-14K-Yellow-Gold.jpg?imwidth=714&impolicy=medium&carousel=true",
+      "https://ak1.ostkcdn.com/images/products/is/images/direct/c51a7ff367caf98772b2fa7b7a4829d28e8a504e/Miadora-Five-Heart-Charm-Station-Bracelet-14K-Yellow-Gold.jpg?imwidth=714&impolicy=medium&carousel=true"
     ],
     stock: 5,
     details: ["Elo Português", "Pingentes maciços", "Ouro 18k"],
@@ -354,8 +354,8 @@ export const initialProducts: Product[] = [
     category: "joias",
     description: "Conjunto completo com colar e brincos em ouro trabalhado.",
     images: [
-      "https://images.unsplash.com/photo-1599643477877-530eb83abc5e?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1000&auto=format&fit=crop"
+      "https://brazilgems.com/cdn/shop/files/emerald-teardrop-18k-gold-plated-necklace-earring-setemerald-teardrop-18k-gold-plated-necklace-earring-set14gp4529-109-431255.jpg?v=1728093896&width=5000",
+      "https://brazilgems.com/cdn/shop/files/emerald-teardrop-18k-gold-plated-necklace-earring-setemerald-teardrop-18k-gold-plated-necklace-earring-set14gp4529-109-590678.jpg?v=1728093896&width=1325"
     ],
     stock: 4,
     details: ["Trabalho manual", "Design exclusivo", "Peça única"],
@@ -365,23 +365,4 @@ export const initialProducts: Product[] = [
     weight: 24.5,
     dimensions: "Colar 42cm + Brincos 1.5cm"
   },
-  {
-    id: "j10",
-    name: "Alexandre Hekkers Bangle",
-    slug: "alexandre-hekkers",
-    price: 3200.00,
-    category: "joias",
-    description: "Bracelete rígido com design orgânico contemporâneo.",
-    images: [
-      "https://images.unsplash.com/photo-1630019020506-600712963364?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1630019019620-658519702844?q=80&w=1000&auto=format&fit=crop"
-    ],
-    stock: 7,
-    details: ["Prata 925 banhada", "Feito à mão", "Minimalista"],
-    tags: ["Pulseira", "Prata", "Moderno"],
-    material: "Banho de Ouro",
-    finish: "Escovado",
-    weight: 8.9,
-    dimensions: "16cm diâmetro interno"
-  }
 ];

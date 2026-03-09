@@ -87,7 +87,7 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 flex flex-col items-center justify-center px-6 bg-cream/30 dark:bg-black">
+    <div className="min-h-screen pt-32 flex flex-col items-center justify-center px-6 bg-cream/30 dark:bg-black">
       {step < questions.length ? (
         <QuizStep 
           question={questions[step].question}

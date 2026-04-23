@@ -1,33 +1,68 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCartStore } from '@/store/cartStore';
-import { ShoppingBag, Menu } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
+import { Menu, Search, ShoppingBag, ChevronRight, X } from 'lucide-react';
 import MobileSidebar from '@/components/layout/MobileSidebar';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useProductStore } from '@/store/productStore';
 
 export default function Navbar() {
   const totalItems = useCartStore(state => state.totalItems());
+  const products = useProductStore((state) => state.products);
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    setIsMounted(true);
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    const animationFrame = window.requestAnimationFrame(() => {
+      setIsMounted(true);
+      handleScroll();
+    });
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
+  const searchResults = useMemo(() => {
+    const normalizedQuery = searchTerm.trim().toLowerCase();
+
+    if (!normalizedQuery) {
+      return [];
+    }
+
+    const normalizeText = (value: string) =>
+      value
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    return products
+      .filter((product) => {
+        const searchableText = normalizeText([
+          product.name,
+          product.description,
+          product.tags.join(" "),
+          product.category,
+        ].join(" "));
+
+        return searchableText.includes(normalizeText(normalizedQuery));
+      })
+      .slice(0, 5);
+  }, [products, searchTerm]);
+
   const navLinks = [
-    { href: '/', label: 'Home' },
+    { href: '/quiz', label: 'Sua assinatura' },
     { href: '/perfumes', label: 'Perfumes' },
     { href: '/joias', label: 'Semi-Joias' },
-    { href: '/quiz', label: 'Quiz' },
   ];
 
   return (
@@ -35,36 +70,121 @@ export default function Navbar() {
       <MobileSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       
       <nav className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out",
-        isScrolled 
-          ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl py-4 border-b border-gray-100 dark:border-zinc-800 shadow-sm" 
-          : "bg-transparent py-8"
+        "fixed top-0 left-0 w-full z-50 border-b border-[#cf8a52]/35 bg-copper text-cream shadow-[0_10px_30px_rgba(48,20,31,0.1)] transition-all duration-500 ease-in-out",
+        isScrolled ? "bg-copper/95 backdrop-blur-md" : "bg-copper"
       )}>
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="mx-auto flex h-18 max-w-7xl items-center gap-4 px-4 sm:px-6 md:gap-6 md:px-8">
           
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsSidebarOpen(true)}
             className={cn(
-              "md:hidden p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-all duration-300",
+              "md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 transition-colors duration-300 hover:bg-white/20",
               isSidebarOpen ? "opacity-0 pointer-events-none" : "opacity-100"
             )}
             aria-label="Abrir menu"
           >
-            <Menu size={24} className="text-zinc-900 dark:text-white" />
+            <Menu size={22} className="text-cream" />
           </button>
 
-          {/* Brand Logo - Center on Mobile, Left on Desktop */}
+          {/* Brand Logo */}
           <Link href="/" className={cn(
-            "text-2xl font-serif tracking-[0.2em] uppercase items-center group absolute left-1/2 -translate-x-1/2 md:relative md:left-0 md:translate-x-0 transition-opacity duration-300",
+            "relative flex min-w-16 items-center gap-0 leading-none transition-opacity duration-300",
             isSidebarOpen ? "opacity-0 md:opacity-100" : "opacity-100"
           )}>
-            <span className="text-zinc-900 dark:text-white transition-colors duration-500">Luxe</span>
-            <span className="text-gold ml-2 font-medium">Showroom</span>
+            <span className="relative block h-11 w-11 shrink-0 md:h-12 md:w-12">
+              <Image
+                src="/logo-navbar.png"
+                alt="La Vie"
+                fill
+                sizes="56px"
+                className="object-contain"
+                priority
+              />
+            </span>
+            <span className="relative -ml-2 block h-10 w-14 shrink-0 md:h-11 md:w-16">
+              <Image
+                src="/LA-VIE.png"
+                alt="LA VIE"
+                fill
+                sizes="64px"
+                className="object-contain"
+                priority
+              />
+            </span>
           </Link>
 
+          <div className="relative hidden flex-1 md:flex">
+            <label className="relative flex w-full items-center">
+              <Search size={16} className="pointer-events-none absolute left-4 text-[#8c6036]" />
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search for products..."
+                className="h-11 w-full rounded-full border border-white/20 bg-[#fff7eb] pl-11 pr-10 text-sm text-[#30141f] outline-none placeholder:text-[#8d7a6d]"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-3 inline-flex h-6 w-6 items-center justify-center rounded-full text-[#8c6036] transition-colors hover:bg-[#f3e8dc]"
+                  aria-label="Limpar busca"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </label>
+
+            {searchTerm.trim() && (
+              <div className="absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-3xl border border-[#eadfd4] bg-white shadow-[0_24px_60px_rgba(48,20,31,0.12)]">
+                <div className="flex items-center justify-between border-b border-[#f0e5db] px-4 py-3">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8b7c72]">
+                    Resultados
+                  </p>
+                  <span className="text-[10px] uppercase tracking-[0.22em] text-[#b59c8a]">
+                    {searchResults.length} encontrados
+                  </span>
+                </div>
+
+                <div className="max-h-96 overflow-auto py-2">
+                  {searchResults.length > 0 ? (
+                    searchResults.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/produto/${product.slug}`}
+                        onClick={() => setSearchTerm("")}
+                        className="flex items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-[#faf5f0]"
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate font-serif text-[1rem] text-[#1c1418]">
+                            {product.name}
+                          </p>
+                          <p className="mt-1 text-[0.72rem] uppercase tracking-[0.22em] text-[#8b7c72]">
+                            {product.category === "perfumes" ? "Perfume" : "Semi-Joia"}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-[#c87634]">
+                          <span className="text-sm font-semibold">
+                            {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(product.price)}
+                          </span>
+                          <ChevronRight size={16} />
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="px-4 py-8 text-center">
+                      <p className="text-sm text-[#6e574d]">Nenhum resultado encontrado.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Navigation Menu - Desktop */}
-          <div className="hidden md:flex items-center space-x-12">
+          <div className="hidden items-center gap-8 xl:flex">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -72,15 +192,15 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href} 
                   className={cn(
-                    "text-[10px] tracking-[0.3em] uppercase font-bold transition-all duration-300 relative py-2",
+                    "group relative py-2 text-[10px] font-semibold uppercase tracking-[0.3em] transition-colors duration-300",
                     isActive 
-                      ? "text-gold" 
-                      : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                      ? "text-cream" 
+                      : "text-cream/80 hover:text-cream"
                   )}
                 >
                   {link.label}
                   <span className={cn(
-                    "absolute bottom-0 left-0 h-[1.5px] bg-gold transition-all duration-500 ease-in-out",
+                    "absolute bottom-0 left-0 h-[1.5px] bg-cream transition-all duration-500 ease-in-out",
                     isActive ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100"
                   )} />
                 </Link>
@@ -89,17 +209,16 @@ export default function Navbar() {
           </div>
 
           {/* Utility Actions */}
-          <div className="hidden md:flex items-center space-x-8">
-            <ThemeToggle />
-            
-            <Link href="/sacola" className="relative group text-zinc-900 dark:text-white">
-              <ShoppingBag size={22} className="group-hover:text-gold transition-colors duration-300 stroke-[1.5px]" />
+          <div className="ml-auto flex items-center gap-4 md:gap-5">
+            <Link href="/sacola" className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-cream transition-colors duration-300 hover:bg-white/20">
+              <ShoppingBag size={20} className="stroke-[1.5px]" />
               {isMounted && totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gold text-white text-[9px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold shadow-lg shadow-gold/20 animate-fade-in">
+                <span className="absolute -top-1.5 -right-1.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-[#30141f] text-[9px] font-bold text-cream shadow-lg shadow-[#30141f]/20 animate-fade-in">
                   {totalItems}
                 </span>
               )}
             </Link>
+
           </div>
         </div>
       </nav>

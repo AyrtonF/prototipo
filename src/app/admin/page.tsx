@@ -22,15 +22,15 @@ export default function AdminPage() {
   }, [products, searchTerm, filterCat, filterStock]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-[#fbf6f1] px-6 pb-20 pt-32 text-[#1c1418]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
         <div>
-          <h1 className="text-4xl font-serif dark:text-white mb-2">Gestão de Inventário</h1>
-          <p className="text-zinc-500 text-sm tracking-widest uppercase">Showroom v2.0</p>
+          <h1 className="mb-2 font-serif text-4xl text-[#1c1418]">Gestão de Inventário</h1>
+          <p className="text-sm uppercase tracking-widest text-[#8b7c72]">Showroom v2.0</p>
         </div>
         <Link 
           href="/admin/produtos/novo"
-          className="bg-gold text-white px-8 py-4 rounded-full flex items-center space-x-3 hover:bg-black transition-all shadow-xl shadow-gold/20 group"
+          className="group flex items-center space-x-3 rounded-full bg-copper px-8 py-4 text-white shadow-[0_18px_40px_rgba(190,108,53,0.2)] transition-colors hover:bg-[#c97941]"
         >
           <Plus size={18} className="group-hover:rotate-90 transition-transform" />
           <span className="uppercase text-[10px] tracking-widest font-bold">Cadastrar Novo Item</span>
@@ -46,7 +46,7 @@ export default function AdminPage() {
             placeholder="Pesquisar por nome do produto..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 outline-none focus:border-gold transition-colors dark:text-white"
+            className="w-full rounded-2xl border border-[#e3d8cf] bg-white py-4 pl-12 pr-4 text-[#1c1418] outline-none transition-colors focus:border-copper"
           />
         </div>
         <div className="relative">
@@ -54,7 +54,7 @@ export default function AdminPage() {
           <select 
             value={filterCat}
             onChange={(e) => setFilterCat(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 outline-none focus:border-gold transition-colors dark:text-white appearance-none text-sm uppercase tracking-widest font-bold"
+            className="w-full appearance-none rounded-2xl border border-[#e3d8cf] bg-white py-4 pl-12 pr-4 text-sm font-bold uppercase tracking-widest text-[#1c1418] outline-none transition-colors focus:border-copper"
           >
             <option value="all">Todas Categorias</option>
             <option value="perfumes">Perfumes</option>
@@ -65,8 +65,8 @@ export default function AdminPage() {
           onClick={() => setFilterStock(!filterStock)}
           className={`flex items-center justify-center space-x-3 px-6 py-4 rounded-2xl border transition-all uppercase text-[10px] tracking-widest font-bold ${
             filterStock 
-              ? 'bg-zinc-800 border-zinc-800 text-white dark:bg-white dark:border-white dark:text-black' 
-              : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400'
+              ? 'border-copper bg-copper text-white' 
+              : 'border-[#e3d8cf] bg-white text-[#8b7c72]'
           }`}
         >
           <AlertTriangle size={16} />
@@ -75,10 +75,10 @@ export default function AdminPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-hidden shadow-sm">
+      <div className="overflow-hidden rounded-3xl border border-[#eadfd4] bg-white shadow-[0_20px_50px_rgba(48,20,31,0.05)]">
         <table className="w-full text-left">
           <thead>
-            <tr className="bg-zinc-50 dark:bg-zinc-800/50 text-[10px] tracking-[0.2em] uppercase text-zinc-400 font-bold border-b border-zinc-100 dark:border-zinc-800">
+            <tr className="border-b border-[#eadfd4] bg-[#fcf8f4] text-[10px] font-bold uppercase tracking-[0.2em] text-[#8b7c72]">
               <th className="p-6">Item</th>
               <th className="p-6">Categoria</th>
               <th className="p-6">Preço</th>
@@ -86,32 +86,32 @@ export default function AdminPage() {
               <th className="p-6 text-right">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-50 dark:divide-zinc-800">
+          <tbody className="divide-y divide-[#f1e8e0]">
             {filteredProducts.map((product) => (
-              <tr key={product.id} className="group hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20 transition-colors">
+              <tr key={product.id} className="group transition-colors hover:bg-[#fdf9f6]">
                 <td className="p-6">
                   <div className="flex items-center space-x-4">
-                    <img src={product.images[0]} className="w-12 h-16 rounded-lg object-cover bg-zinc-100" />
-                    <span className="font-serif text-lg dark:text-white">{product.name}</span>
+                    <img src={product.images[0]} className="h-16 w-12 rounded-lg bg-[#f2ece5] object-cover" />
+                    <span className="font-serif text-lg text-[#1c1418]">{product.name}</span>
                   </div>
                 </td>
-                <td className="p-6 text-xs uppercase tracking-widest text-zinc-400">{product.category}</td>
-                <td className="p-6 font-medium dark:text-zinc-200">{formatCurrency(product.price)}</td>
+                <td className="p-6 text-xs uppercase tracking-widest text-[#8b7c72]">{product.category}</td>
+                <td className="p-6 font-medium text-[#1c1418]">{formatCurrency(product.price)}</td>
                 <td className="p-6 text-center">
                   <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold ${
                     product.stock < 5 
-                      ? 'bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900 animate-pulse' 
-                      : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300'
+                      ? 'bg-[#8a4f2a] text-white animate-pulse' 
+                      : 'bg-[#f2ece5] text-[#7b665d]'
                   }`}>
                     {product.stock} un
                   </span>
                 </td>
                 <td className="p-6 text-right">
                   <div className="flex items-center justify-end space-x-2">
-                    <Link href={`/admin/produtos/editar/${product.id}`} className="p-2 text-zinc-400 hover:text-gold transition-colors">
+                    <Link href={`/admin/produtos/editar/${product.id}`} className="p-2 text-[#8b7c72] transition-colors hover:text-copper">
                       <Edit2 size={18} />
                     </Link>
-                    <button onClick={() => confirm('Excluir este item?') && deleteProduct(product.id)} className="p-2 text-zinc-400 hover:text-red-500 transition-colors">
+                    <button onClick={() => confirm('Excluir este item?') && deleteProduct(product.id)} className="p-2 text-[#8b7c72] transition-colors hover:text-red-500">
                       <Trash2 size={18} />
                     </button>
                   </div>

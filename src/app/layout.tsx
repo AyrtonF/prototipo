@@ -4,8 +4,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Luxe Showroom | Perfumes e Semi-Joias de Luxo",
-  description: "Descubra fragrâncias exclusivas e peças únicas que expressam elegância.",
+  title: "La Vie | Joias e Perfumes",
+  description: "Showroom editorial de joias e perfumes com identidade visual em tons de creme, cobre e vinho.",
 };
 
 export default function RootLayout({
@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="antialiased font-sans bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
+      <body className="antialiased font-sans bg-cream text-wine transition-colors duration-300">
         <Navbar />
-        <main className="min-h-screen">
+        <main className="min-h-screen pt-[72px]">
           {children}
         </main>
         <Footer />

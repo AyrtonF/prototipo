@@ -1,140 +1,234 @@
-"use client";
-
 import Link from "next/link";
-import { useProductStore } from "@/store/productStore";
-import ProductCard from "@/components/products/ProductCard";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { initialProducts } from "@/data/products";
+import { formatCurrency } from "@/lib/utils";
+import type { Product } from "@/types";
+
+const featuredPerfumes = initialProducts.filter((product) => product.category === "perfumes").slice(0, 4);
+const featuredJewelry = initialProducts.filter((product) => product.category === "joias").slice(0, 4);
+
+function ShowcaseCard({ product }: { product: Product }) {
+  return (
+    <article className="group flex flex-col items-center gap-4">
+      <Link
+        href={`/produto/${product.slug}`}
+        className="flex h-75 w-full items-center justify-center border border-[#e9dbc4] bg-white px-6 py-8 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(48,20,31,0.08)]"
+      >
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          className="max-h-full w-auto object-contain transition-transform duration-700 group-hover:scale-105"
+        />
+      </Link>
+
+      <div className="text-center">
+        <h3 className="font-serif text-[1.02rem] uppercase tracking-[0.08em] text-[#1f1418]">
+          {product.name}
+        </h3>
+        <p className="mt-1 text-sm font-semibold text-[#30141f]">{formatCurrency(product.price)}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function Home() {
-  const products = useProductStore((state) => state.products);
-  const featuredPerfumes = products.filter(p => p.category === 'perfumes').slice(0, 3);
-  const featuredJewelry = products.filter(p => p.category === 'joias').slice(0, 3);
-
   return (
-    <div className="flex flex-col bg-zinc-50 dark:bg-zinc-950">
-      
-      {/* 1. Immersive Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {/* Main Hero Background with Gradient Overlays */}
-          <div className="absolute inset-0 bg-black/40 z-10" />
-          <img 
-            src="/foto-home.png" 
-            alt="Luxe Background"
-            className="w-full h-full object-cover scale-105 animate-pulse-slow"
+    <div className="bg-white text-wine">
+      <section className="relative overflow-hidden bg-wine text-cream">
+        <div className="absolute inset-0">
+          <img
+            src="/perfume-home-principal.png"
+            alt="Perfume principal da home"
+            className="h-full w-full object-cover object-right opacity-95"
           />
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-linear-to-t from-zinc-50 dark:from-zinc-950 to-transparent z-20" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(48,20,31,0.92)_0%,rgba(48,20,31,0.88)_34%,rgba(48,20,31,0.68)_52%,rgba(48,20,31,0.25)_70%,rgba(48,20,31,0.08)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(190,108,53,0.14),transparent_28%),radial-gradient(circle_at_50%_78%,rgba(226,174,162,0.12),transparent_18%)]" />
         </div>
-        
-        <div className="relative z-30 text-center px-6 md:px-12 animate-fade-up max-w-5xl">
-          <span className="text-[10px] md:text-xs tracking-[0.5em] uppercase mb-8 block font-bold text-white/80">
-            A Arte da Sofisticação
-          </span>
-          <h1 className="text-6xl md:text-9xl font-serif mb-12 text-white leading-[0.9] drop-shadow-2xl">
-            Redefinindo o <br />
-            <span className="italic text-gold">Luxo</span>
-          </h1>
-          <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-            <Link 
-              href="/perfumes" 
-              className="w-full md:w-64 py-5 bg-white text-zinc-900 hover:bg-gold hover:text-white transition-all duration-500 uppercase text-[10px] tracking-[0.3em] font-bold rounded-full shadow-2xl"
-            >
-              Coleção de Perfumes
-            </Link>
-            <Link 
-              href="/joias" 
-              className="w-full md:w-64 py-5 border border-white/30 text-white backdrop-blur-md hover:bg-white hover:text-zinc-900 transition-all duration-500 uppercase text-[10px] tracking-[0.3em] font-bold rounded-full"
-            >
-              Semi-Joias Finas
-            </Link>
-          </div>
-        </div>
-      </section>
 
-      {/* 2. Discover Quiz Section - Minimalist Banner */}
-      <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative overflow-hidden bg-zinc-900 dark:bg-zinc-900 rounded-[2.5rem] p-12 md:p-24 flex flex-col md:flex-row items-center justify-between group">
-            {/* Background Texture */}
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-            
-            <div className="relative z-10 md:max-w-xl text-center md:text-left mb-12 md:mb-0">
-              <div className="inline-flex items-center space-x-3 text-gold mb-6">
-                <Sparkles size={18} />
-                <span className="text-xs uppercase tracking-[0.3em] font-bold">Consultoria Digital</span>
-              </div>
-              <h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight">
-                Descubra sua Assinatura Olfativa
-              </h2>
-              <p className="text-zinc-400 text-lg font-light leading-relaxed mb-10 max-w-md">
-                Responda ao nosso quiz exclusivo e encontre a fragrância que harmoniza com sua essência e estilo de vida.
-              </p>
-              <Link href="/quiz" className="inline-flex items-center space-x-6 text-white group/btn">
-                <span className="text-xs uppercase tracking-[0.4em] font-bold border-b border-gold pb-2 group-hover/btn:text-gold transition-colors">Iniciar Experiência</span>
-                <div className="w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center group-hover/btn:border-gold group-hover/btn:bg-gold transition-all duration-500">
-                  <ArrowRight size={18} />
-                </div>
+        <div className="relative mx-auto flex min-h-[calc(100vh-4.5rem)] max-w-7xl items-center px-6 py-16 md:px-12 lg:py-20">
+          <div className="max-w-2xl">
+            <p className="mb-6 text-[11px] uppercase tracking-[0.45em] text-rose/90">Coleção exclusiva</p>
+            <h1 className="max-w-[10ch] font-serif text-5xl leading-[0.9] md:text-7xl lg:text-[4.85rem]">
+              ENCONTRE A SUA
+              <span className="block">ESSÊNCIA</span>
+            </h1>
+            <p className="mt-7 max-w-xl text-sm leading-7 text-cream/80 md:text-[15px]">
+              Responda ao nosso quiz exclusivo e descubra a fragrância ideal que traduz sua essência e valoriza sua personalidade. Encontre uma combinação perfeita que se harmoniza com seu estilo de vida de forma única.
+            </p>
+            <div className="mt-10">
+              <Link
+                href="/quiz"
+                className="inline-flex items-center justify-center bg-copper px-7 py-4 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
+              >
+                Descubra agora
               </Link>
             </div>
-
-            <div className="relative z-10 md:w-1/3 aspect-square bg-zinc-800 rounded-3xl overflow-hidden shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-700">
-              <img 
-                src="/quiz.png"
-                alt="Quiz Experience"
-                className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
-              />
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Curated Selection Sections */}
-      <div className="space-y-40 pb-40">
-        
-        {/* Perfumes Section */}
-        <section className="px-6 md:px-12 max-w-7xl mx-auto w-full">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-            <div className="max-w-md animate-fade-up">
-              <span className="text-gold font-bold text-[10px] tracking-[0.5em] uppercase mb-4 block">Parfums de Niche</span>
-              <h2 className="text-5xl md:text-7xl font-serif dark:text-white mb-6">Essências <br /> em Destaque</h2>
-              <p className="text-zinc-500 dark:text-zinc-400 font-light leading-relaxed">Uma seleção rigorosa de fragrâncias raras que definem a presença e o caráter de quem as usa.</p>
-            </div>
-            <Link href="/perfumes" className="flex items-center space-x-4 text-xs uppercase tracking-[0.3em] font-bold hover:text-gold transition-colors pb-2 border-b border-zinc-200 dark:border-zinc-800 dark:text-zinc-300">
-              <span>Explorar Todos</span>
-              <ArrowRight size={14} />
+      <section className="bg-white px-6 py-14 md:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.96fr_1.04fr]">
+          <div className="overflow-hidden bg-white shadow-[0_22px_60px_rgba(48,20,31,0.08)]">
+            <img
+              src="/Imagem-joia-homepage.png"
+              alt="Joia editorial La Vie"
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          <div className="relative py-6 lg:pl-10">
+            <svg
+              className="absolute right-0 top-0 hidden h-80 w-80 opacity-90 lg:block"
+              viewBox="0 0 200 200"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M100 172C56 148 20 118 20 78C20 50 41 30 67 30C83 30 93 38 100 50C107 38 117 30 133 30C159 30 180 50 180 78C180 118 144 148 100 172Z"
+                stroke="#be6c35"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Dia dos namorados</p>
+            <h2 className="mt-4 max-w-[16ch] font-serif text-4xl leading-[1.04] text-copper md:text-5xl lg:text-[3.45rem]">
+              NESTE DIA DOS NAMORADOS, CELEBRE O AMOR COM LA VIE.
+            </h2>
+            <p className="mt-6 max-w-lg text-sm leading-7 text-[#5f4238] md:text-[15px]">
+              Joias que selam o amor em cada detalhe. Peças que traduzem sentimentos em forma de brilho, eternizando conexões e tornando cada momento uma lembrança única.
+            </p>
+            <Link
+              href="/joias"
+              className="mt-8 inline-flex items-center justify-center bg-copper px-6 py-3 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
+            >
+              Confira
             </Link>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {featuredPerfumes.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+      <section className="bg-white px-6 py-20 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <h2 className="font-serif text-4xl uppercase tracking-[0.06em] text-[#1d1217] md:text-5xl">
+              ESSÊNCIAS EM DESTAQUE
+            </h2>
+            <p className="mt-2 text-sm text-[#7b665d]">Essências que combinam com você</p>
           </div>
-        </section>
 
-        {/* Jewelry Section */}
-        <section className="px-6 md:px-12 max-w-7xl mx-auto w-full">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-            <div className="max-w-md animate-fade-up">
-              <span className="text-gold font-bold text-[10px] tracking-[0.5em] uppercase mb-4 block">Haute Joaillerie</span>
-              <h2 className="text-5xl md:text-7xl font-serif dark:text-white mb-6">Brilho <br /> Atemporal</h2>
-              <p className="text-zinc-500 dark:text-zinc-400 font-light leading-relaxed">Peças banhadas a ouro 18k e ródio, desenhadas para capturar a luz e a admiração em cada movimento.</p>
+          <div className="relative mt-14">
+            <button
+              type="button"
+              className="absolute left-0 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
+              aria-label="Voltar produtos em destaque"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {featuredPerfumes.map((product) => (
+                <ShowcaseCard key={product.id} product={product} />
+              ))}
             </div>
-            <Link href="/joias" className="flex items-center space-x-4 text-xs uppercase tracking-[0.3em] font-bold hover:text-gold transition-colors pb-2 border-b border-zinc-200 dark:border-zinc-800 dark:text-zinc-300">
-              <span>Explorar Todas</span>
-              <ArrowRight size={14} />
+
+            <button
+              type="button"
+              className="absolute right-0 top-1/2 z-10 hidden translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
+              aria-label="Avançar produtos em destaque"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="/perfumes"
+              className="inline-flex min-w-40 items-center justify-center rounded-full border border-[#e5d4c0] bg-white px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-[#30141f] transition-colors duration-300 hover:bg-[#fff6e0]"
+            >
+              Ver tudo
             </Link>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {featuredJewelry.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+      <section className="bg-white px-6 py-20 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <h2 className="font-serif text-4xl uppercase tracking-[0.06em] text-[#1d1217] md:text-5xl">
+              BRILHO ATEMPORAL
+            </h2>
+            <p className="mt-2 text-sm text-[#7b665d]">Brilhos que te destacam</p>
           </div>
-        </section>
-      </div>
 
+          <div className="relative mt-14">
+            <button
+              type="button"
+              className="absolute left-0 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
+              aria-label="Voltar joias em destaque"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {featuredJewelry.map((product) => (
+                <ShowcaseCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="absolute right-0 top-1/2 z-10 hidden translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
+              aria-label="Avançar joias em destaque"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="/joias"
+              className="inline-flex min-w-40 items-center justify-center rounded-full border border-[#e5d4c0] bg-white px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-[#30141f] transition-colors duration-300 hover:bg-[#fff6e0]"
+            >
+              Ver tudo
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-6 py-24 md:py-28">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="relative min-h-120 overflow-hidden">
+           
+
+            <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+                <img
+                  src="/imagem-perfume-homepage.png"
+                  alt="Perfume em destaque"
+                  className="h-full w-full object-cover"
+                />
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Perfume de assinatura</p>
+            <h2 className="mt-4 max-w-lg font-serif text-4xl leading-[1.04] text-copper md:text-5xl lg:text-[3.7rem]">
+              ENCONTRE SUA ESSÊNCIA
+            </h2>
+            <p className="mt-6 max-w-md text-sm leading-7 text-[#5f4238] md:text-[15px]">
+              Responda ao nosso quiz exclusivo e descubra a fragrância ideal que traduz sua essência e valoriza sua personalidade. Encontre uma combinação perfeita que se harmoniza com seu estilo de vida de forma única.
+            </p>
+            <Link
+              href="/quiz"
+              className="mt-10 inline-flex items-center justify-center bg-copper px-7 py-4 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
+            >
+              Descubra agora
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

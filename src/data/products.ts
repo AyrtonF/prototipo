@@ -19,7 +19,9 @@ export const initialProducts: Product[] = [
     intensity: "Intensa",
     fixation: "Muito Forte",
     concentration: "Extrait de Parfum",
-    olfactoryNotes: { top: "Neroli, Aldeídos", heart: "Rosa de Maio, Jasmim", base: "Sândalo, Baunilha" }
+    olfactoryNotes: { top: "Neroli, Aldeídos", heart: "Rosa de Maio, Jasmim", base: "Sândalo, Baunilha" },
+    occasion: ["Eventos especiais", "Noite"],
+    style: ["Clássico", "Elegante"]
   },
   {
     id: "p2",
@@ -38,7 +40,9 @@ export const initialProducts: Product[] = [
     intensity: "Moderada",
     fixation: "Forte",
     concentration: "Eau de Parfum",
-    olfactoryNotes: { top: "Bergamota da Calábria", heart: "Pimenta de Szechuan", base: "Ambroxan" }
+    olfactoryNotes: { top: "Bergamota da Calábria", heart: "Pimenta de Szechuan", base: "Ambroxan" },
+    occasion: ["Dia a dia", "Trabalho"],
+    style: ["Moderno", "Ousado"]
   },
   {
     id: "p3",
@@ -57,7 +61,9 @@ export const initialProducts: Product[] = [
     intensity: "Moderada",
     fixation: "Moderada",
     concentration: "Eau de Toilette",
-    olfactoryNotes: { top: "Limão, Hortelã", heart: "Gengibre, Jasmim", base: "Sândalo, Cedro" }
+    olfactoryNotes: { top: "Limão, Hortelã", heart: "Gengibre, Jasmim", base: "Sândalo, Cedro" },
+    occasion: ["Trabalho", "Noite"],
+    style: ["Elegante", "Moderno"]
   },
   {
     id: "p4",
@@ -76,7 +82,9 @@ export const initialProducts: Product[] = [
     intensity: "Intensa",
     fixation: "Muito Forte",
     concentration: "Millesime",
-    olfactoryNotes: { top: "Abacaxi, Groselha", heart: "Bétula, Patchouli", base: "Almíscar, Âmbar" }
+    olfactoryNotes: { top: "Abacaxi, Groselha", heart: "Bétula, Patchouli", base: "Almíscar, Âmbar" },
+    occasion: ["Noite", "Eventos especiais"],
+    style: ["Ousado", "Clássico"]
   },
   {
     id: "p5",
@@ -95,7 +103,9 @@ export const initialProducts: Product[] = [
     intensity: "Intensa",
     fixation: "Forte",
     concentration: "Eau de Parfum",
-    olfactoryNotes: { top: "Pêra, Amora", heart: "Íris, Flor de Laranjeira", base: "Pralinê, Baunilha" }
+    olfactoryNotes: { top: "Pêra, Amora", heart: "Íris, Flor de Laranjeira", base: "Pralinê, Baunilha" },
+    occasion: ["Dia a dia", "Eventos especiais"],
+    style: ["Elegante", "Clássico"]
   },
   {
     id: "p6",
@@ -114,7 +124,9 @@ export const initialProducts: Product[] = [
     intensity: "Intensa",
     fixation: "Forte",
     concentration: "Eau de Parfum",
-    olfactoryNotes: { top: "Amêndoa, Café", heart: "Jasmim Sambac, Tuberosa", base: "Fava Tonka, Cacau" }
+    olfactoryNotes: { top: "Amêndoa, Café", heart: "Jasmim Sambac, Tuberosa", base: "Fava Tonka, Cacau" },
+    occasion: ["Noite", "Eventos especiais"],
+    style: ["Ousado", "Moderno"]
   },
   {
     id: "p7",
@@ -133,7 +145,9 @@ export const initialProducts: Product[] = [
     intensity: "Moderada",
     fixation: "Moderada",
     concentration: "Eau de Parfum",
-    olfactoryNotes: { top: "Mandarina, Lavanda", heart: "Flor de Laranjeira", base: "Baunilha de Madagascar" }
+    olfactoryNotes: { top: "Mandarina, Lavanda", heart: "Flor de Laranjeira", base: "Baunilha de Madagascar" },
+    occasion: ["Trabalho", "Noite"],
+    style: ["Moderno", "Elegante"]
   },
   {
     id: "p8",
@@ -152,7 +166,9 @@ export const initialProducts: Product[] = [
     intensity: "Moderada",
     fixation: "Moderada",
     concentration: "Eau de Toilette",
-    olfactoryNotes: { top: "Menta, Maçã Verde", heart: "Fava Tonka, Ambroxan", base: "Baunilha, Vetiver" }
+    olfactoryNotes: { top: "Menta, Maçã Verde", heart: "Fava Tonka, Ambroxan", base: "Baunilha, Vetiver" },
+    occasion: ["Dia a dia", "Noite"],
+    style: ["Ousado", "Moderno"]
   },
   {
     id: "p9",
@@ -171,7 +187,9 @@ export const initialProducts: Product[] = [
     intensity: "Suave",
     fixation: "Fraca",
     concentration: "Eau de Toilette",
-    olfactoryNotes: { top: "Limão, Bergamota", heart: "Notas Marinhas, Jacinto", base: "Cedro, Musgo" }
+    olfactoryNotes: { top: "Limão, Bergamota", heart: "Notas Marinhas, Jacinto", base: "Cedro, Musgo" },
+    occasion: ["Dia a dia", "Trabalho"],
+    style: ["Clássico", "Moderno"]
   },
   {
     id: "p10",
@@ -190,7 +208,9 @@ export const initialProducts: Product[] = [
     intensity: "Moderada",
     fixation: "Forte",
     concentration: "Eau de Parfum Intense",
-    olfactoryNotes: { top: "Infusão de Baunilha", heart: "Lavanda, Baunilha Caviar", base: "Baunilha Absolute" }
+    olfactoryNotes: { top: "Infusão de Baunilha", heart: "Lavanda, Baunilha Caviar", base: "Baunilha Absolute" },
+    occasion: ["Dia a dia", "Eventos especiais"],
+    style: ["Elegante", "Moderno"]
   },
 
   // --- JOIAS (10) ---

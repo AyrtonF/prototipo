@@ -1,252 +1,319 @@
 "use client";
 
-import { use } from "react";
-import { useProductStore } from "@/store/productStore";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { use, useEffect, useMemo, useState } from "react";
+import { ChevronRight, Minus, Package, Plus, ShoppingBag } from "lucide-react";
+import { useToast } from "@/hooks/useToast";
+import { formatCurrency, cn } from "@/lib/utils";
+import { useProductStore } from "@/store/productStore";
 import { useCartStore } from "@/store/cartStore";
-import { formatCurrency } from "@/lib/utils";
-import { ShoppingBag, ChevronRight, Droplets, Diamond, Clock, Package } from "lucide-react";
-import { useState } from "react";
+import { Product } from "@/types";
+
+function DetailStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-3xl border border-[#efe6df] bg-[#fbf8f6] px-4 py-4 sm:px-5">
+      <p className="text-[0.7rem] uppercase tracking-[0.22em] text-[#96887f]">{label}</p>
+      <p className="mt-2 text-[1rem] font-semibold text-[#1c1418]">{value}</p>
+    </div>
+  );
+}
+
+function RelatedProductCard({ product }: { product: Product }) {
+  return (
+    <Link href={`/produto/${product.slug}`} className="group block">
+      <article className="flex h-full flex-col rounded-3xl border border-[#e5dcd5] bg-white px-4 py-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(48,20,31,0.08)]">
+        <div className="flex flex-1 items-center justify-center rounded-2xl border border-[#ded6cf] bg-white p-4">
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="h-56 w-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        </div>
+        <div className="mt-4 text-center">
+          <h3 className="font-serif text-[0.92rem] uppercase tracking-[0.08em] text-[#1c1418] transition-colors group-hover:text-copper">
+            {product.name}
+          </h3>
+          <p className="mt-1 text-sm font-semibold text-[#1c1418]">{formatCurrency(product.price)}</p>
+        </div>
+      </article>
+    </Link>
+  );
+}
 
 export default function ProdutoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const products = useProductStore(state => state.products);
+  const updateStock = useProductStore(state => state.updateStock);
   const product = products.find(p => p.slug === slug);
   const addToCart = useCartStore(state => state.addToCart);
+  const { showToast, ToastContainer } = useToast();
   const [activeImage, setActiveImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    setActiveImage(0);
+    setQuantity(1);
+  }, [slug]);
 
   if (!product) return notFound();
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 pb-12 sm:pb-20 min-h-screen">
-      {/* Breadcrumbs */}
-      <nav className="flex items-center space-x-2 text-[10px] tracking-widest uppercase text-gray-400 mb-8 sm:mb-12 overflow-x-auto whitespace-nowrap">
-        <a href="/" className="hover:text-black dark:hover:text-white transition-colors">Home</a>
-        <ChevronRight size={12} />
-        <a href={product.category === 'perfumes' ? '/perfumes' : '/joias'} className="hover:text-black dark:hover:text-white transition-colors">
-          {product.category === 'perfumes' ? 'Perfumes' : 'Semi-Joias'}
-        </a>
-        <ChevronRight size={12} />
-        <span className="text-black dark:text-white font-medium">{product.name}</span>
-      </nav>
+  const categoryLabel = product.category === "perfumes" ? "Perfumes" : "Semi-Joias";
+  const breadcrumbLabel = product.category === "perfumes" ? product.tags[0] ?? categoryLabel : product.material ?? categoryLabel;
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20">
-        {/* Gallery */}
-        <div className="space-y-4 animate-fade-in-up">
-          <div 
-            className="aspect-4/5 overflow-hidden bg-zinc-50 dark:bg-zinc-800 relative rounded-3xl border border-gray-100 dark:border-zinc-800"
-          >
-             <img 
-               src={product.images[activeImage]} 
-               alt={product.name}
-               className="w-full h-full object-cover"
-             />
-          </div>
-          
-          {product.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-3 sm:gap-4">
-              {product.images.map((img, idx) => (
-                <button 
-                  key={idx}
-                  onClick={() => setActiveImage(idx)}
-                  className={`aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-800 border-2 rounded-xl transition-all ${
-                    activeImage === idx 
-                      ? 'border-gold ring-2 ring-gold/20' 
-                      : 'border-transparent hover:border-zinc-300 dark:hover:border-zinc-700'
-                  }`}
+  const galleryImages = useMemo(() => {
+    if (product.images.length === 0) {
+      return [];
+    }
+
+    if (product.images.length >= 3) {
+      return product.images.slice(0, 3);
+    }
+
+    const nextImages = [...product.images];
+    while (nextImages.length < 3) {
+      nextImages.push(product.images[nextImages.length % product.images.length]);
+    }
+
+    return nextImages;
+  }, [product.images]);
+
+  const selectedImage = galleryImages[activeImage] ?? galleryImages[0] ?? product.images[0];
+  const availableUnits = product.stock;
+
+  const detailStats = useMemo(() => {
+    if (product.category === "perfumes") {
+      return [
+        { label: "Intensidade", value: product.intensity ?? "-" },
+        { label: "Fixação", value: product.fixation ?? "-" },
+        { label: "Concentração", value: product.concentration ?? "-" },
+      ];
+    }
+
+    return [
+      { label: "Material", value: product.material ?? "-" },
+      { label: "Peso", value: product.weight ? `${product.weight}g` : "-" },
+      { label: "Acabamento", value: product.finish ?? "-" },
+      { label: "Dimensões", value: product.dimensions ?? "-" },
+    ];
+  }, [product]);
+
+  const relatedProducts = useMemo(() => {
+    const currentTags = new Set(product.tags);
+
+    return products
+      .filter((candidate) => candidate.id !== product.id && candidate.category === product.category)
+      .map((candidate) => {
+        const sharedTags = candidate.tags.reduce((score, tag) => score + (currentTags.has(tag) ? 1 : 0), 0);
+        const priceDistance = Math.abs(candidate.price - product.price);
+
+        return {
+          product: candidate,
+          score: sharedTags * 1000 - priceDistance,
+        };
+      })
+      .sort((left, right) => right.score - left.score)
+      .slice(0, 4)
+      .map((entry) => entry.product);
+  }, [product, products]);
+
+  const incrementQuantity = () => {
+    setQuantity((current) => Math.min(current + 1, Math.max(product.stock, 1)));
+  };
+
+  const decrementQuantity = () => {
+    setQuantity((current) => Math.max(current - 1, 1));
+  };
+
+  const handleAddToCart = () => {
+    if (availableUnits <= 0) {
+      return;
+    }
+
+    const unitsToAdd = Math.min(quantity, availableUnits);
+
+    for (let index = 0; index < unitsToAdd; index += 1) {
+      addToCart(product);
+    }
+
+    updateStock(product.id, -unitsToAdd);
+    setQuantity(1);
+
+    showToast(
+      unitsToAdd === 1
+        ? "1 unidade adicionada à sacola"
+        : `${unitsToAdd} unidades adicionadas à sacola`,
+      "success"
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8 lg:pt-8">
+      <ToastContainer />
+
+      <div className="mx-auto max-w-7xl">
+        <nav className="mb-7 flex items-center gap-2 overflow-x-auto whitespace-nowrap text-[0.72rem] text-[#8b7c72] sm:mb-10">
+          <Link href="/" className="transition-colors hover:text-[#30141f]">
+            Home
+          </Link>
+          <ChevronRight size={14} className="shrink-0 text-[#b9afa8]" />
+          <Link href={`/${product.category}`} className="transition-colors hover:text-[#30141f]">
+            {categoryLabel}
+          </Link>
+          <ChevronRight size={14} className="shrink-0 text-[#b9afa8]" />
+          <span className="transition-colors hover:text-[#30141f]">{breadcrumbLabel}</span>
+          <ChevronRight size={14} className="shrink-0 text-[#b9afa8]" />
+          <span className="font-medium text-[#1c1418]">{product.name}</span>
+        </nav>
+
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] xl:gap-16">
+          <section className="grid gap-5 md:grid-cols-[120px_minmax(0,1fr)] md:items-start md:gap-8">
+            <div className="hidden md:flex flex-col gap-5">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={`${image}-${index}`}
+                  type="button"
+                  onClick={() => setActiveImage(index)}
+                  className={cn(
+                    "flex h-31 w-31 items-center justify-center overflow-hidden rounded-2xl border bg-white p-2 transition-all duration-300",
+                    activeImage === index
+                      ? "border-[#1c1418] shadow-[0_10px_24px_rgba(48,20,31,0.08)]"
+                      : "border-[#e4dbd4] hover:border-[#c7bbb1]"
+                  )}
                 >
-                  <img src={img} alt={`${product.name} view ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img src={image} alt={`${product.name} ${index + 1}`} className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
-          )}
-        </div>
 
-        {/* Details */}
-        <div className="flex flex-col animate-fade-in-up">
-          <span className="text-xs tracking-[0.3em] uppercase text-gold font-bold mb-4">
-            {product.category === 'joias' ? 'Semi-Joia Fina' : 'Parfum Exclusivo'}
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif mb-4 sm:mb-6 dark:text-white leading-tight">
-            {product.name}
-          </h1>
-          
-          {/* Tags */}
-          {product.tags && product.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {product.tags.map(tag => (
-                <span 
+            <div className="order-1 overflow-hidden rounded-4xl border border-[#ece1da] bg-[#f4f1ee] p-5 sm:p-7 md:order-0 md:min-h-132">
+              <div className="flex min-h-88 items-center justify-center md:min-h-112">
+                <img
+                  src={selectedImage}
+                  alt={product.name}
+                  className="max-h-112 w-full object-contain object-center"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4 overflow-x-auto pb-1 md:hidden">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={`${image}-${index}`}
+                  type="button"
+                  onClick={() => setActiveImage(index)}
+                  className={cn(
+                    "h-24 w-24 shrink-0 overflow-hidden rounded-2xl border bg-white p-2 transition-all",
+                    activeImage === index ? "border-[#1c1418]" : "border-[#e4dbd4]"
+                  )}
+                >
+                  <img src={image} alt={`${product.name} ${index + 1}`} className="h-full w-full object-contain" />
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="flex flex-col pt-2">
+            <div className="flex flex-wrap gap-2">
+              {product.tags.slice(0, 3).map((tag) => (
+                <span
                   key={tag}
-                  className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-full text-[10px] uppercase tracking-widest font-bold"
+                  className="rounded-full bg-[#f1eeeb] px-3 py-1.5 text-[0.72rem] font-medium text-[#8c7f77]"
                 >
                   {tag}
                 </span>
               ))}
             </div>
-          )}
-          
-          <p className="text-2xl sm:text-3xl font-medium mb-8 sm:mb-12 dark:text-gray-200">
-            {formatCurrency(product.price)}
-          </p>
-          
-          <div className="space-y-8 sm:space-y-10 mb-8 sm:mb-12">
-            <div>
-              <h3 className="text-xs tracking-widest uppercase font-bold mb-4 text-gray-400">Descrição</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base sm:text-lg font-light">
-                {product.description}
-              </p>
-            </div>
 
-            {/* Quick Info Grid */}
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              {product.category === 'perfumes' && (
-                <>
-                  {product.intensity && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold">Intensidade</div>
-                      <div className="font-medium text-sm dark:text-white">{product.intensity}</div>
-                    </div>
-                  )}
-                  {product.fixation && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold flex items-center gap-2">
-                        <Clock size={12} />
-                        Fixação
-                      </div>
-                      <div className="font-medium text-sm dark:text-white">{product.fixation}</div>
-                    </div>
-                  )}
-                  {product.concentration && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800 col-span-2">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold">Concentração</div>
-                      <div className="font-medium text-sm dark:text-white">{product.concentration}</div>
-                    </div>
-                  )}
-                </>
-              )}
-              
-              {product.category === 'joias' && (
-                <>
-                  {product.material && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold">Material</div>
-                      <div className="font-medium text-sm dark:text-white">{product.material}</div>
-                    </div>
-                  )}
-                  {product.finish && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold">Acabamento</div>
-                      <div className="font-medium text-sm dark:text-white">{product.finish}</div>
-                    </div>
-                  )}
-                  {product.weight && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold">Peso</div>
-                      <div className="font-medium text-sm dark:text-white">{product.weight}g</div>
-                    </div>
-                  )}
-                  {product.dimensions && (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                      <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold">Dimensões</div>
-                      <div className="font-medium text-sm dark:text-white">{product.dimensions}</div>
-                    </div>
-                  )}
-                </>
-              )}
-              
-              <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800 col-span-2">
-                <div className="text-[10px] tracking-widest uppercase text-zinc-400 mb-2 font-bold flex items-center gap-2">
-                  <Package size={12} />
-                  Estoque
-                </div>
-                <div className="font-medium text-sm dark:text-white">
-                  {product.stock > 0 ? `${product.stock} unidades disponíveis` : 'Indisponível'}
-                </div>
+            <h1 className="mt-4 font-serif text-[2.45rem] uppercase leading-[0.95] tracking-[0.02em] text-[#111111] sm:text-[3.1rem] xl:text-[3.65rem]">
+              {product.name}
+            </h1>
+
+            <p className="mt-4 text-[2rem] font-bold leading-none tracking-[-0.03em] text-[#111111] sm:text-[2.45rem]">
+              {formatCurrency(product.price)}
+            </p>
+
+            <p className="mt-5 max-w-xl text-[0.98rem] leading-7 text-[#7f7268]">
+              {product.description}
+            </p>
+
+            <div className="mt-6 border-t border-[#e8dfd8] pt-5">
+              <div className={cn("grid gap-5", product.category === "perfumes" ? "sm:grid-cols-3" : "sm:grid-cols-2 xl:grid-cols-4")}>
+                {detailStats.map((stat) => (
+                  <DetailStat key={stat.label} label={stat.label} value={stat.value} />
+                ))}
               </div>
             </div>
 
-            {product.details && product.details.length > 0 && (
-              <div>
-                <h3 className="text-xs tracking-widest uppercase font-bold mb-4 text-gray-400">Destaques</h3>
-                <ul className="space-y-3">
-                  {product.details.map((detail, i) => (
-                    <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex items-start space-x-3">
-                      <span className="w-1.5 h-1.5 bg-gold rounded-full mt-2 shrink-0" />
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
+            <div className="mt-6 inline-flex w-fit items-center gap-3 rounded-[1.25rem] bg-[#d37836] px-4 py-3 text-white shadow-[0_16px_32px_rgba(190,108,53,0.2)]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10">
+                <Package size={20} />
               </div>
-            )}
+              <div className="text-sm font-semibold leading-tight">
+                <div>{availableUnits} unidades</div>
+                <div>disponíveis</div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-col gap-4 border-t border-[#e8dfd8] pt-5 sm:flex-row sm:items-center">
+              <div className="inline-flex h-12 items-center rounded-full bg-[#f2eeeb] px-1.5">
+                <button
+                  type="button"
+                  onClick={decrementQuantity}
+                  disabled={quantity <= 1}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#1c1418] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="Diminuir quantidade"
+                >
+                  <Minus size={18} />
+                </button>
+                <span className="min-w-10 px-2 text-center text-sm font-medium text-[#1c1418]">{quantity}</span>
+                <button
+                  type="button"
+                  onClick={incrementQuantity}
+                  disabled={availableUnits > 0 && quantity >= availableUnits}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#1c1418] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="Aumentar quantidade"
+                >
+                  <Plus size={18} />
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                disabled={availableUnits <= 0}
+                className="inline-flex h-12 flex-1 items-center justify-center gap-3 rounded-full bg-[#c87634] px-6 text-sm font-semibold uppercase tracking-[0.22em] text-white transition-all duration-300 hover:bg-[#b86429] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <ShoppingBag size={18} />
+                <span>Adicionar à Sacola</span>
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <section className="mt-16 sm:mt-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-serif text-[1.45rem] uppercase tracking-[0.24em] text-[#3a322f] sm:text-[1.85rem]">
+              VOCÊ TAMBÉM PODE GOSTAR
+            </h2>
+            <div className="mt-4 h-px w-full bg-[#bfb3aa]" />
           </div>
 
-          <button 
-            onClick={() => addToCart(product)}
-            disabled={product.stock <= 0}
-            className="w-full bg-black dark:bg-white dark:text-black text-white py-5 sm:py-6 uppercase text-xs tracking-[0.3em] font-bold hover:bg-gold dark:hover:bg-gold hover:text-white transition-all flex items-center justify-center space-x-4 mb-12 sm:mb-16 rounded-2xl shadow-xl hover:shadow-gold/20 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <ShoppingBag size={18} />
-            <span>{product.stock > 0 ? 'Adicionar à Sacola' : 'Indisponível'}</span>
-          </button>
+          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:gap-8">
+            {relatedProducts.map((relatedProduct) => (
+              <RelatedProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
+          </div>
 
-          {/* Luxury Section specific to Category */}
-          {product.category === 'perfumes' && product.olfactoryNotes && (
-            <div className="bg-zinc-50 dark:bg-zinc-900 p-6 sm:p-12 space-y-6 sm:space-y-8 rounded-3xl border border-gray-100 dark:border-zinc-800">
-              <div className="flex items-center space-x-4 mb-4">
-                <Droplets className="text-gold" />
-                <h3 className="text-lg font-serif dark:text-white">Pirâmide Olfativa</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 relative">
-                {/* Connecting Line */}
-                <div className="hidden sm:block absolute top-4 left-0 w-full h-px bg-gray-200 dark:bg-zinc-700 z-0" />
-                
-                <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900 sm:pr-4">
-                  <span className="text-[10px] tracking-widest uppercase text-gold font-bold block mb-2">Topo (Saída)</span>
-                  <p className="text-sm dark:text-gray-300">{product.olfactoryNotes.top}</p>
-                </div>
-                <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900 sm:px-2">
-                  <span className="text-[10px] tracking-widest uppercase text-gold font-bold block mb-2">Coração (Corpo)</span>
-                  <p className="text-sm dark:text-gray-300">{product.olfactoryNotes.heart}</p>
-                </div>
-                <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900 sm:pl-4">
-                  <span className="text-[10px] tracking-widest uppercase text-gold font-bold block mb-2">Fundo (Base)</span>
-                  <p className="text-sm dark:text-gray-300">{product.olfactoryNotes.base}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {product.category === 'joias' && (
-            <div className="bg-zinc-50 dark:bg-zinc-900 p-6 sm:p-12 space-y-6 sm:space-y-8 rounded-3xl border border-gray-100 dark:border-zinc-800">
-              <div className="flex items-center space-x-4 mb-4">
-                <Diamond className="text-gold" />
-                <h3 className="text-lg font-serif dark:text-white">Especificações Técnicas</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-                <div>
-                  <span className="text-[10px] tracking-widest uppercase text-gray-400 block mb-2">Material Base</span>
-                  <p className="text-sm dark:text-gray-300 font-medium">{product.material}</p>
-                </div>
-                <div>
-                  <span className="text-[10px] tracking-widest uppercase text-gray-400 block mb-2">Acabamento</span>
-                  <p className="text-sm dark:text-gray-300 font-medium">{product.finish}</p>
-                </div>
-                {product.weight && (
-                  <div>
-                    <span className="text-[10px] tracking-widest uppercase text-gray-400 block mb-2">Peso</span>
-                    <p className="text-sm dark:text-gray-300 font-medium">{product.weight} gramas</p>
-                  </div>
-                )}
-                {product.dimensions && (
-                  <div>
-                    <span className="text-[10px] tracking-widest uppercase text-gray-400 block mb-2">Dimensões</span>
-                    <p className="text-sm dark:text-gray-300 font-medium">{product.dimensions}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
+          <div className="mt-10 flex justify-center">
+            <Link
+              href={`/${product.category}`}
+              className="inline-flex h-11 items-center justify-center rounded-full border border-[#e4dbd4] bg-white px-8 text-sm capitalize text-[#1c1418] transition-colors hover:bg-[#faf7f4]"
+            >
+              ver tudo
+            </Link>
+          </div>
+        </section>
       </div>
     </div>
   );

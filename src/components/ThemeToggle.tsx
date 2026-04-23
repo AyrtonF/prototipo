@@ -2,15 +2,10 @@
 
 import { useThemeStore } from "@/store/themeStore";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function ThemeToggle() {
   const { isDarkMode, toggleTheme } = useThemeStore();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -19,14 +14,6 @@ export default function ThemeToggle() {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
-
-  if (!isMounted) {
-    return (
-      <div className="p-2 w-9 h-9" aria-label="Carregando tema">
-        {/* Placeholder para evitar layout shift */}
-      </div>
-    );
-  }
 
   return (
     <button 

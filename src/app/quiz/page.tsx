@@ -1,15 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import QuizStep from "@/components/quiz/QuizStep";
-import QuizResult from "@/components/quiz/QuizResult";
+import { useRouter } from "next/navigation";
 import { useProductStore } from "@/store/productStore";
-import { Product } from "@/types";
+import { cn } from "@/lib/utils";
+import { Occasion, Style } from "@/types";
 
 const questions = [
   {
     question: "Que tipo de fragrância desperta seus sentidos?",
-    options: ["Doce", "Cítrica", "Amadeirada", "Floral", "Oriental"],
+    options: ["Doce", "Cítrica", "Amadeirado", "Floral", "Oriental"],
     key: "category"
   },
   {
@@ -29,11 +30,32 @@ const questions = [
   }
 ];
 
+function QuizLogoSpace() {
+  return (
+    <div className="mx-auto flex w-full max-w-md items-center justify-center">
+      <div className="relative flex h-72 w-full items-center justify-center sm:h-80 md:h-104">
+        <span className="relative block h-44 w-44 sm:h-52 sm:w-52 md:h-56 md:w-56">
+          <Image
+            src="/logo-quizz.svg"
+            alt="La Vie"
+            fill
+            sizes="224px"
+            className="object-contain"
+            priority
+          />
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function QuizPage() {
+  const router = useRouter();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [recommendations, setRecommendations] = useState<Product[]>([]);
   const products = useProductStore((state) => state.products);
+
+  const currentQuestion = questions[step];
 
   const handleSelect = (option: string) => {
     const currentQuestion = questions[step];
@@ -48,57 +70,84 @@ export default function QuizPage() {
   };
 
   const calculateResult = (finalAnswers: Record<string, string>) => {
-    // Filter only perfumes
     const perfumes = products.filter(p => p.category === 'perfumes');
-    
-    // Scoring system
+    const occasionAnswer = finalAnswers.occasion as Occasion | undefined;
+    const styleAnswer = finalAnswers.style as Style | undefined;
+
     const scoredProducts = perfumes.map(product => {
       let score = 0;
-      
-      // Check tags against category preference
+
       if (product.tags.includes(finalAnswers.category)) score += 3;
-      
-      // Check intensity
+
       if (product.intensity === finalAnswers.intensity) score += 2;
-      
-      // Check occasion
-      if (product.occasion?.includes(finalAnswers.occasion as any)) score += 1;
-      
-      // Check style
-      if (product.style?.includes(finalAnswers.style as any)) score += 1;
+
+      if (occasionAnswer && product.occasion?.includes(occasionAnswer)) score += 1;
+
+      if (styleAnswer && product.style?.includes(styleAnswer)) score += 1;
 
       return { product, score };
     });
 
-    // Sort by score and pick top 3
     const topPicks = scoredProducts
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map(item => item.product);
 
-    setRecommendations(topPicks);
-    setStep(questions.length); // Move to result view
-  };
+    if (topPicks.length === 0) {
+      return;
+    }
 
-  const resetQuiz = () => {
-    setStep(0);
-    setAnswers({});
-    setRecommendations([]);
+    router.push(`/quiz/resultado?ids=${encodeURIComponent(topPicks.map((item) => item.id).join(","))}`);
   };
 
   return (
-    <div className="min-h-screen pt-32 flex flex-col items-center justify-center px-6 bg-cream/30 dark:bg-black">
-      {step < questions.length ? (
-        <QuizStep 
-          question={questions[step].question}
-          options={questions[step].options}
-          onSelect={handleSelect}
-          step={step + 1}
-          totalSteps={questions.length}
-        />
-      ) : (
-        <QuizResult recommendations={recommendations} onReset={resetQuiz} />
-      )}
+    <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <section className="grid items-center gap-10 py-6 md:grid-cols-[minmax(300px,0.92fr)_1.08fr] md:gap-14 lg:py-10">
+          <QuizLogoSpace />
+
+          <div className="max-w-2xl">
+            <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Sua assinatura</p>
+            <h1 className="mt-4 font-serif text-4xl leading-[1.02] text-copper md:text-5xl lg:text-[3.55rem]">
+              ENCONTRE A SUA ESSÊNCIA
+            </h1>
+            <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#4f433c]">
+              Responda ao nosso quiz exclusivo e descubra a fragrância ideal que traduz sua essência e valoriza sua personalidade.
+              Encontre uma combinação perfeita que se harmoniza com seu estilo de vida de forma única.
+            </p>
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 max-w-3xl pb-12 text-center sm:mt-14 lg:mt-20">
+          <div className="mb-8">
+            <p className="text-[0.95rem] font-medium text-[#1f1517]">passo {step + 1} de {questions.length}</p>
+            <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[#eee5dd]">
+              <div
+                className="h-full bg-copper transition-all duration-500"
+                style={{ width: `${(step / questions.length) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          <h2 className="mx-auto max-w-3xl font-serif text-3xl leading-[1.1] text-[#1c1217] md:text-4xl">
+            {currentQuestion.question}
+          </h2>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {currentQuestion.options.map((option) => (
+              <button
+                key={option}
+                onClick={() => handleSelect(option)}
+                className={cn(
+                  "flex h-14 items-center justify-center rounded-2xl bg-[#d9d9d9] text-[1.02rem] font-medium text-[#111111] transition-all duration-300 hover:-translate-y-0.5 hover:bg-copper hover:text-white hover:shadow-[0_16px_30px_rgba(190,108,53,0.2)]"
+                )}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

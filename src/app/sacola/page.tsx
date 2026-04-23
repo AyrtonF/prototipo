@@ -1,24 +1,50 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
+import { useProductStore } from "@/store/productStore";
 import { formatCurrency } from "@/lib/utils";
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useState, useEffect, useMemo } from "react";
 import { useToast } from "@/hooks/useToast";
 
 export default function SacolaPage() {
-  const { cart, removeFromCart, updateQuantity, totalPrice } = useCartStore();
+  const { cart, removeFromCart, updateQuantity } = useCartStore();
+  const products = useProductStore((state) => state.products);
+  const productStatus = useProductStore((state) => state.status);
   const { showToast, ToastContainer } = useToast();
   const [showModal, setShowModal] = useState(false);
   const [userName, setUserName] = useState("");
   const [isMounted, setIsMounted] = useState(false);
+
+  const visibleCart = useMemo(() => {
+    const validProductIds = new Set(products.map((product) => product.id));
+    return cart.filter((item) => validProductIds.has(item.id));
+  }, [cart, products]);
+
+  const visibleTotalPrice = useMemo(
+    () => visibleCart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    [visibleCart]
+  );
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsMounted(true), 0);
 
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (productStatus !== "ready") {
+      return;
+    }
+
+    const validProductIds = new Set(products.map((product) => product.id));
+
+    cart
+      .filter((item) => !validProductIds.has(item.id))
+      .forEach((item) => removeFromCart(item.id));
+  }, [cart, productStatus, products, removeFromCart]);
 
   const handleCheckout = () => {
     if (!userName.trim()) {
@@ -29,11 +55,11 @@ export default function SacolaPage() {
     const phoneNumber = "5581991530002"; 
     let message = `Olá! Meu nome é ${userName}. Gostaria de comprar os seguintes produtos:\n\n`;
 
-    cart.forEach((item, index) => {
+    visibleCart.forEach((item, index) => {
       message += `${index + 1}x ${item.name} - ${formatCurrency(item.price)}\n`;
     });
 
-    message += `\nTotal: ${formatCurrency(totalPrice())}\n\nPode me ajudar com o pedido?`;
+    message += `\nTotal: ${formatCurrency(visibleTotalPrice)}\n\nPode me ajudar com o pedido?`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -53,7 +79,18 @@ export default function SacolaPage() {
     );
   }
 
-  if (cart.length === 0) {
+  if (productStatus !== "ready") {
+    return (
+      <div className="min-h-screen bg-[#fbf6f1] px-6 pb-20 pt-40 text-center text-[#1c1418]">
+        <div className="animate-pulse">
+          <ShoppingBag size={48} className="mx-auto mb-6 text-[#d7c1a7]" />
+          <p className="text-[10px] uppercase tracking-widest text-[#8b7c72]">Carregando catálogo...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (visibleCart.length === 0) {
     return (
       <div className="min-h-screen bg-[#fbf6f1] px-6 pb-20 pt-40 text-center text-[#1c1418]">
         <ToastContainer />
@@ -84,10 +121,10 @@ export default function SacolaPage() {
 
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] lg:gap-16">
         <div className="space-y-6">
-          {cart.map((item) => (
+          {visibleCart.map((item) => (
             <div key={item.id} className="flex items-center gap-5 rounded-4xl border border-[#eadfd4] bg-white p-4 shadow-[0_16px_40px_rgba(48,20,31,0.05)] animate-fade-in-up">
               <div className="h-28 w-24 overflow-hidden rounded-2xl bg-[#f6f1eb]">
-                <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+                <Image src={item.images[0]} alt={item.name} width={96} height={112} className="h-full w-full object-cover" />
               </div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-serif text-lg text-[#1c1418]">{item.name}</h3>
@@ -117,7 +154,7 @@ export default function SacolaPage() {
           </div>
           <div className="flex justify-between text-[10px] uppercase tracking-[0.28em] text-[#8b7c72]">
             <span>Subtotal</span>
-            <span>{formatCurrency(totalPrice())}</span>
+            <span>{formatCurrency(visibleTotalPrice)}</span>
           </div>
           <div className="flex justify-between border-b border-[#eadfd4] pb-8 text-[10px] uppercase tracking-[0.28em] text-[#8b7c72]">
             <span>Envio</span>
@@ -125,7 +162,7 @@ export default function SacolaPage() {
           </div>
           <div className="flex justify-between pt-4 font-serif text-xl text-[#1c1418]">
             <span>Total</span>
-            <span className="text-copper">{formatCurrency(totalPrice())}</span>
+            <span className="text-copper">{formatCurrency(visibleTotalPrice)}</span>
           </div>
           <button 
             onClick={() => setShowModal(true)}

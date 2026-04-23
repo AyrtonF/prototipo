@@ -47,9 +47,9 @@ export default function PerfumeHoverEffect({ product }: PerfumeHoverEffectProps)
             key={`${particle.noteIndex}-${index}`}
             className={cn(
               "absolute -translate-x-1/2 translate-y-3 rounded-full opacity-0 blur-[0.5px] transition-all duration-700 ease-out group-hover:opacity-100 group-hover:scale-100",
-              index % 3 === 0 && "group-hover:-translate-y-14",
-              index % 3 === 1 && "group-hover:-translate-y-20",
-              index % 3 === 2 && "group-hover:-translate-y-16"
+              index % 3 === 0 ? "group-hover:-translate-y-14" : "",
+              index % 3 === 1 ? "group-hover:-translate-y-20" : "",
+              index % 3 === 2 ? "group-hover:-translate-y-16" : ""
             )}
             style={{
               left: `${particle.left}%`,

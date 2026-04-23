@@ -41,7 +41,7 @@ export default async function Home() {
             <div className="mt-10">
               <Link
                 href="/quiz"
-                className="inline-flex items-center justify-center bg-copper px-7 py-4 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
+                className="inline-flex items-center justify-center rounded-full bg-copper px-7 py-4 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
               >
                 Descubra agora
               </Link>
@@ -70,13 +70,7 @@ export default async function Home() {
               fill="none"
               aria-hidden="true"
             >
-              <path
-                d="M100 172C56 148 20 118 20 78C20 50 41 30 67 30C83 30 93 38 100 50C107 38 117 30 133 30C159 30 180 50 180 78C180 118 144 148 100 172Z"
-                stroke="#be6c35"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              
             </svg>
 
             <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Dia dos namorados</p>
@@ -88,7 +82,7 @@ export default async function Home() {
             </p>
             <Link
               href="/joias"
-              className="mt-8 inline-flex items-center justify-center bg-copper px-6 py-3 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
+              className="mt-8 inline-flex items-center justify-center rounded-full bg-copper px-6 py-3 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
             >
               Confira
             </Link>
@@ -139,7 +133,7 @@ export default async function Home() {
             </p>
             <Link
               href="/quiz"
-              className="mt-10 inline-flex items-center justify-center bg-copper px-7 py-4 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
+              className="mt-10 inline-flex items-center justify-center rounded-full bg-copper px-7 py-4 text-xs font-semibold uppercase tracking-[0.26em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#c97941]"
             >
               Descubra agora
             </Link>

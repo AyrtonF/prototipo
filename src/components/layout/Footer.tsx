@@ -21,9 +21,6 @@ export default function Footer() {
               <Link href="/sobre" className="transition-colors hover:text-white">
                 Sobre
               </Link>
-              <Link href="/contato" className="transition-colors hover:text-white">
-                Contato
-              </Link>
               <Link href="/perfumes" className="transition-colors hover:text-white">
                 Perfumes
               </Link>

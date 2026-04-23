@@ -10,23 +10,32 @@ interface JewelryHoverImageProps {
 export default function JewelryHoverImage({ product }: JewelryHoverImageProps) {
   const [isHovered, setIsHovered] = useState(false);
   const mainImage = product.images[0];
-  const lifestyleImage = product.images[1] || mainImage; // Fallback to main if no lifestyle
+  const lifestyleImage = product.images[1] || mainImage;
 
   return (
-    <div 
-      className="relative w-full h-full overflow-hidden"
+    <div
+      className="group relative h-full w-full overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img 
-        src={mainImage} 
+      <img
+        src={mainImage}
         alt={product.name}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${isHovered ? 'opacity-0' : 'opacity-100'}`}
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-all duration-700 ease-out ${
+          isHovered ? "scale-[1.04] opacity-0" : "scale-100 opacity-100"
+        }`}
       />
-      <img 
-        src={lifestyleImage} 
+      <img
+        src={lifestyleImage}
         alt={`${product.name} lifestyle`}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-all duration-700 ease-out ${
+          isHovered ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"
+        }`}
+      />
+      <div
+        className={`absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.22),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(48,20,31,0.08))] transition-opacity duration-700 ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
       />
     </div>
   );

@@ -1,4 +1,7 @@
-import Link from "next/link";
+const WHATSAPP_NUMBER = "5581991530002";
+const WHATSAPP_MESSAGE = encodeURIComponent(
+  "Olá, gostaria de saber mais sobre a La Vie."
+);
 
 export default function SobrePage() {
   return (
@@ -22,12 +25,14 @@ export default function SobrePage() {
             </p>
 
             <div className="mt-8 flex justify-center lg:justify-start">
-              <Link
-                href="/contato"
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex min-w-60 items-center justify-center rounded-full bg-copper px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-white transition-colors hover:bg-[#c97941]"
               >
                 Entrar em contato
-              </Link>
+              </a>
             </div>
           </div>
 

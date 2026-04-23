@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useCartStore } from '@/store/cartStore';
 import { Menu, Search, ShoppingBag, ChevronRight, X } from 'lucide-react';
 import MobileSidebar from '@/components/layout/MobileSidebar';
+import ThemeToggle from '@/components/ThemeToggle';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { useProductStore } from '@/store/productStore';
@@ -210,6 +211,8 @@ export default function Navbar() {
 
           {/* Utility Actions */}
           <div className="ml-auto flex items-center gap-4 md:gap-5">
+            <ThemeToggle />
+
             <Link href="/sacola" className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-cream transition-colors duration-300 hover:bg-white/20">
               <ShoppingBag size={20} className="stroke-[1.5px]" />
               {isMounted && totalItems > 0 && (

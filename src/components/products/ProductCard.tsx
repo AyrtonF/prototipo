@@ -6,6 +6,8 @@ import { formatCurrency } from "@/lib/utils";
 import { useCartStore } from "@/store/cartStore";
 import { ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import JewelryHoverImage from "@/components/products/JewelryHoverImage";
+import PerfumeHoverEffect from "@/components/products/PerfumeHoverEffect";
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +15,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const addToCart = useCartStore(state => state.addToCart);
+  const showJewelryHover = product.category === "joias";
+  const showPerfumeHover = product.category === "perfumes";
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#eadfd7] bg-white transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(48,20,31,0.08)]">
@@ -29,13 +33,22 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           />
 
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className={cn(
-              "relative z-10 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-            )}
-          />
+          {showJewelryHover ? (
+            <div className="relative z-10 h-full w-full">
+              <JewelryHoverImage product={product} />
+            </div>
+          ) : (
+            <>
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className={cn(
+                  "relative z-10 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                )}
+              />
+              {showPerfumeHover && <PerfumeHoverEffect product={product} />}
+            </>
+          )}
         </Link>
       </div>
 

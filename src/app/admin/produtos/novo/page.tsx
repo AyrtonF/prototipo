@@ -89,6 +89,7 @@ export default function NovoProdutoPage() {
       if (!data.occasion?.length) errs.push("occasion");
       if (!data.style?.length) errs.push("style");
     } else if (data.category === "joias") {
+      if (!data.images?.[1]) errs.push("img1");
       if (!data.finish) errs.push("finish");
       if (!data.dimensions) errs.push("dimensions");
     }
@@ -139,9 +140,14 @@ export default function NovoProdutoPage() {
   };
 
   const removeImageSlot = (index: number) => {
-    const minImages = 1;
+    const minImages = formData.category === "joias" ? 2 : 1;
     if ((formData.images?.length || 0) <= minImages) {
-      showToast("Mínimo de uma imagem obrigatório!", "error");
+      showToast(
+        formData.category === "joias"
+          ? "Joias precisam de pelo menos 2 imagens!"
+          : "Mínimo de uma imagem obrigatório!",
+        "error"
+      );
       return;
     }
     
@@ -206,7 +212,7 @@ export default function NovoProdutoPage() {
                 <div className="flex items-center justify-between">
                   <label className="text-[9px] block font-bold uppercase tracking-widest text-[#8b7c72]">
                     {index === 0 && "Imagem Principal *"}
-                    {index === 1 && formData.category === "joias" && "Lifestyle (pessoa usando) - opcional"}
+                    {index === 1 && formData.category === "joias" && "Lifestyle (pessoa usando) *"}
                     {index === 1 && formData.category === "perfumes" && "Imagem Secundária"}
                     {index > 1 && `Imagem ${index + 1}`}
                   </label>

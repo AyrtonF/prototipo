@@ -8,23 +8,29 @@ export default function ThemeToggle() {
   const { isDarkMode, toggleTheme } = useThemeStore();
 
   useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--copper",
+      isDarkMode ? "#30141f" : "#be6c35"
+    );
+
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
 
   return (
-    <button 
+    <button
       onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-luxury"
-      aria-label="Alternar tema"
+      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-cream transition-colors duration-300 hover:bg-white/20"
+      aria-label={isDarkMode ? "Voltar para o cobre" : "Ativar tema vinho"}
+      aria-pressed={isDarkMode}
     >
       {isDarkMode ? (
-        <Sun size={20} className="text-gold" />
+        <Sun size={20} className="text-white" />
       ) : (
-        <Moon size={20} className="text-gray-600 dark:text-gray-300" />
+        <Moon size={20} className="text-cream" />
       )}
     </button>
   );

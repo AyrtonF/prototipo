@@ -13,9 +13,9 @@ import type { ToastType } from "@/components/ui/Toast";
 
 function DetailStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-3xl border border-[#efe6df] bg-[#fbf8f6] px-4 py-4 sm:px-5">
-      <p className="text-[0.7rem] uppercase tracking-[0.22em] text-[#96887f]">{label}</p>
-      <p className="mt-2 text-[1rem] font-semibold text-[#1c1418]">{value}</p>
+    <div className="flex items-start justify-between gap-6 border-t border-[#e8dfd8] py-4 first:border-t-0 first:pt-0 last:pb-0 sm:py-5">
+      <p className="text-[0.72rem] uppercase tracking-[0.26em] text-[#96887f]">{label}</p>
+      <p className="text-right text-[0.98rem] font-semibold text-[#1c1418]">{value}</p>
     </div>
   );
 }
@@ -158,26 +158,30 @@ function ProdutoContent({
         </nav>
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] xl:gap-16">
-          <section className="grid gap-5 md:grid-cols-[120px_minmax(0,1fr)] md:items-start md:gap-8">
-            <div className="hidden md:flex flex-col gap-5">
+          <section className="grid gap-5 md:grid-cols-[124px_minmax(0,1fr)] md:items-start md:gap-8">
+            <div className="hidden md:flex flex-col gap-5 pt-1">
               {galleryImages.map((image, index) => (
                 <button
                   key={`${image}-${index}`}
                   type="button"
                   onClick={() => setActiveImage(index)}
                   className={cn(
-                    "flex h-31 w-31 items-center justify-center overflow-hidden rounded-2xl border bg-white p-2 transition-all duration-300",
+                    "flex h-32 w-32 items-center justify-center overflow-hidden rounded-2xl border bg-white p-2.5 transition-all duration-300",
                     activeImage === index
-                      ? "border-[#1c1418] shadow-[0_10px_24px_rgba(48,20,31,0.08)]"
+                      ? "border-[#1c1418] shadow-[0_12px_28px_rgba(48,20,31,0.08)]"
                       : "border-[#e4dbd4] hover:border-[#c7bbb1]"
                   )}
                 >
-                  <img src={image} alt={`${product.name} ${index + 1}`} className="h-full w-full object-contain" />
+                  <img
+                    src={image}
+                    alt={`${product.name} ${index + 1}`}
+                    className="h-full w-full object-contain object-center"
+                  />
                 </button>
               ))}
             </div>
 
-            <div className="order-1 overflow-hidden rounded-4xl border border-[#ece1da] bg-[#f4f1ee] p-5 sm:p-7 md:order-0 md:min-h-132">
+            <div className="order-1 overflow-hidden rounded-[2.75rem] border border-[#ece1da] bg-[#f6f1ec] p-5 sm:p-7 md:order-0 md:min-h-132">
               <div className="flex min-h-88 items-center justify-center md:min-h-112">
                 <img
                   src={selectedImage}
@@ -194,11 +198,15 @@ function ProdutoContent({
                   type="button"
                   onClick={() => setActiveImage(index)}
                   className={cn(
-                    "h-24 w-24 shrink-0 overflow-hidden rounded-2xl border bg-white p-2 transition-all",
+                    "h-24 w-24 shrink-0 overflow-hidden rounded-3xl border bg-[#fbf8f4] p-2.5 transition-all",
                     activeImage === index ? "border-[#1c1418]" : "border-[#e4dbd4]"
                   )}
                 >
-                  <img src={image} alt={`${product.name} ${index + 1}`} className="h-full w-full object-contain" />
+                  <img
+                    src={image}
+                    alt={`${product.name} ${index + 1}`}
+                    className="h-full w-full object-contain object-center"
+                  />
                 </button>
               ))}
             </div>
@@ -220,23 +228,19 @@ function ProdutoContent({
               {product.name}
             </h1>
 
-            <p className="mt-4 text-[2rem] font-bold leading-none tracking-[-0.03em] text-[#111111] sm:text-[2.45rem]">
-              {formatCurrency(product.price)}
-            </p>
-
             <p className="mt-5 max-w-xl text-[0.98rem] leading-7 text-[#7f7268]">
               {product.description}
             </p>
 
-            <div className="mt-6 border-t border-[#e8dfd8] pt-5">
-              <div className={cn("grid gap-5", product.category === "perfumes" ? "sm:grid-cols-3" : "sm:grid-cols-2 xl:grid-cols-4")}>
-                {detailStats.map((stat) => (
-                  <DetailStat key={stat.label} label={stat.label} value={stat.value} />
-                ))}
+            <div className="mt-6">
+              <div className="border-b border-[#e8dfd8] pb-4">
               </div>
+              {detailStats.map((stat) => (
+                <DetailStat key={stat.label} label={stat.label} value={stat.value} />
+              ))}
             </div>
 
-            <div className="mt-6 inline-flex w-fit items-center gap-3 rounded-[1.25rem] bg-[#d37836] px-4 py-3 text-white shadow-[0_16px_32px_rgba(190,108,53,0.2)]">
+            <div className="mt-6 inline-flex w-fit items-center gap-3 rounded-[1.25rem] bg-copper px-4 py-3 text-white shadow-[0_16px_32px_rgba(48,20,31,0.18)]">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10">
                 <Package size={20} />
               </div>
@@ -252,7 +256,7 @@ function ProdutoContent({
                   type="button"
                   onClick={decrementQuantity}
                   disabled={quantity <= 1}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#1c1418] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[#1c1418] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                   aria-label="Diminuir quantidade"
                 >
                   <Minus size={18} />
@@ -262,7 +266,7 @@ function ProdutoContent({
                   type="button"
                   onClick={incrementQuantity}
                   disabled={availableUnits > 0 && quantity >= availableUnits}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#1c1418] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[#1c1418] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                   aria-label="Aumentar quantidade"
                 >
                   <Plus size={18} />
@@ -273,7 +277,7 @@ function ProdutoContent({
                 type="button"
                 onClick={handleAddToCart}
                 disabled={availableUnits <= 0}
-                className="inline-flex h-12 flex-1 items-center justify-center gap-3 rounded-full bg-[#c87634] px-6 text-sm font-semibold uppercase tracking-[0.22em] text-white transition-all duration-300 hover:bg-[#b86429] disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-12 flex-1 items-center justify-center gap-3 rounded-full bg-copper px-6 text-sm font-semibold uppercase tracking-[0.22em] text-white transition-all duration-300 hover:bg-[#42202e] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ShoppingBag size={18} />
                 <span>Adicionar à Sacola</span>

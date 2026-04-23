@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { use, useEffect, useMemo, useState } from "react";
+import { use, useMemo, useState } from "react";
 import { ChevronRight, Minus, Package, Plus, ShoppingBag } from "lucide-react";
 import { useToast } from "@/hooks/useToast";
 import { formatCurrency, cn } from "@/lib/utils";
 import { useProductStore } from "@/store/productStore";
 import { useCartStore } from "@/store/cartStore";
 import { Product } from "@/types";
+import type { ToastType } from "@/components/ui/Toast";
 
 function DetailStat({ label, value }: { label: string; value: string }) {
   return (
@@ -41,41 +42,31 @@ function RelatedProductCard({ product }: { product: Product }) {
   );
 }
 
-export default function ProdutoPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
-  const products = useProductStore(state => state.products);
-  const updateStock = useProductStore(state => state.updateStock);
-  const product = products.find(p => p.slug === slug);
-  const addToCart = useCartStore(state => state.addToCart);
-  const { showToast, ToastContainer } = useToast();
+interface ProdutoContentProps {
+  product: Product;
+  products: Product[];
+  addToCart: (product: Product) => void;
+  updateStock: (id: string, amount: number) => void;
+  showToast: (message: string, type?: ToastType) => void;
+  ToastContainer: () => React.ReactElement;
+}
+
+function ProdutoContent({
+  product,
+  products,
+  addToCart,
+  updateStock,
+  showToast,
+  ToastContainer,
+}: ProdutoContentProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    setActiveImage(0);
-    setQuantity(1);
-  }, [slug]);
-
-  if (!product) return notFound();
 
   const categoryLabel = product.category === "perfumes" ? "Perfumes" : "Semi-Joias";
   const breadcrumbLabel = product.category === "perfumes" ? product.tags[0] ?? categoryLabel : product.material ?? categoryLabel;
 
   const galleryImages = useMemo(() => {
-    if (product.images.length === 0) {
-      return [];
-    }
-
-    if (product.images.length >= 3) {
-      return product.images.slice(0, 3);
-    }
-
-    const nextImages = [...product.images];
-    while (nextImages.length < 3) {
-      nextImages.push(product.images[nextImages.length % product.images.length]);
-    }
-
-    return nextImages;
+    return product.images;
   }, [product.images]);
 
   const selectedImage = galleryImages[activeImage] ?? galleryImages[0] ?? product.images[0];
@@ -316,5 +307,49 @@ export default function ProdutoPage({ params }: { params: Promise<{ slug: string
         </section>
       </div>
     </div>
+  );
+}
+
+export default function ProdutoPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
+  const products = useProductStore((state) => state.products);
+  const status = useProductStore((state) => state.status);
+  const updateStock = useProductStore((state) => state.updateStock);
+  const product = products.find((candidate) => candidate.slug === slug);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const { showToast, ToastContainer } = useToast();
+
+  if (status !== "ready") {
+    return (
+      <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8 lg:pt-8">
+        <div className="mx-auto flex min-h-[70vh] max-w-7xl items-center justify-center">
+          <div className="text-center">
+            <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Coleção</p>
+            <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.02] text-copper md:text-5xl">
+              Carregando produto
+            </h1>
+            <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#4f433c]">
+              Sincronizando os dados do banco para abrir a ficha do produto.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return notFound();
+  }
+
+  return (
+    <ProdutoContent
+      key={product.id}
+      product={product}
+      products={products}
+      addToCart={addToCart}
+      updateStock={updateStock}
+      showToast={showToast}
+      ToastContainer={ToastContainer}
+    />
   );
 }

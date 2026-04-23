@@ -10,8 +10,9 @@ function ProductListContent() {
   const categoryFilter = searchParams.get('cat');
   
   const products = useProductStore((state) => state.products);
+  const status = useProductStore((state) => state.status);
   const [selectedCategory, setSelectedCategory] = useState<string>(categoryFilter || 'todos');
-  const [priceRange, setPriceRange] = useState<number>(1000);
+  const [priceRange, setPriceRange] = useState<number>(1000000);
 
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
@@ -20,6 +21,29 @@ function ProductListContent() {
       return matchCat && matchPrice;
     });
   }, [selectedCategory, priceRange, products]);
+
+  if (status !== "ready") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white px-6 text-center text-gold">
+        <div>
+          <p className="font-serif text-2xl uppercase tracking-[0.3em]">Carregando coleção...</p>
+          <p className="mt-3 text-sm text-zinc-400">Sincronizando os produtos do Supabase.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white px-6 text-center text-[#30141f]">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Catálogo vazio</p>
+          <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.05] md:text-5xl">Nenhum produto cadastrado</h1>
+          <p className="mt-4 text-sm text-[#7b665d]">Adicione produtos no painel administrativo para liberar esta vitrine.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen">
@@ -65,7 +89,7 @@ function ProductListContent() {
                 <input 
                   type="range" 
                   min="0" 
-                  max="1000" 
+                  max="1000000"
                   step="50"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
@@ -94,7 +118,7 @@ function ProductListContent() {
             <div className="h-96 flex flex-col items-center justify-center text-gray-400 bg-white dark:bg-zinc-900 rounded-2xl border border-dashed border-gray-200 dark:border-zinc-800">
               <p className="italic text-lg">Nenhum produto encontrado nesta seleção.</p>
               <button 
-                onClick={() => {setSelectedCategory('todos'); setPriceRange(1000);}}
+                  onClick={() => {setSelectedCategory('todos'); setPriceRange(1000000);}}
                 className="mt-6 text-xs uppercase tracking-widest text-gold font-bold border-b border-gold pb-1"
               >
                 Limpar Filtros

@@ -15,7 +15,9 @@ export default function SacolaPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    const timer = window.setTimeout(() => setIsMounted(true), 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   const handleCheckout = () => {
@@ -24,7 +26,7 @@ export default function SacolaPage() {
       return;
     }
 
-    const phoneNumber = "5511999999999"; 
+    const phoneNumber = "5581991530002"; 
     let message = `Olá! Meu nome é ${userName}. Gostaria de comprar os seguintes produtos:\n\n`;
 
     cart.forEach((item, index) => {

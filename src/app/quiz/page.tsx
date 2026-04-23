@@ -54,6 +54,21 @@ export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const products = useProductStore((state) => state.products);
+  const status = useProductStore((state) => state.status);
+
+  if (status !== "ready") {
+    return (
+      <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+        <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center text-center">
+          <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Sua assinatura</p>
+          <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.02] text-copper md:text-5xl">Carregando quiz</h1>
+          <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#4f433c]">
+            Aguarde enquanto sincronizamos o catálogo remoto para montar as recomendações.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const currentQuestion = questions[step];
 

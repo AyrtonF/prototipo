@@ -2,12 +2,13 @@
 
 import { useProductStore } from "@/store/productStore";
 import { formatCurrency } from "@/lib/utils";
-import { Plus, Edit2, Trash2, Package, Search, Filter, AlertTriangle } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, Filter, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { useState, useMemo } from "react";
 
 export default function AdminPage() {
   const { products, deleteProduct } = useProductStore();
+  const status = useProductStore((state) => state.status);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCat, setFilterCat] = useState("all");
   const [filterStock, setFilterStock] = useState(false);
@@ -20,6 +21,20 @@ export default function AdminPage() {
       return matchSearch && matchCat && matchStock;
     });
   }, [products, searchTerm, filterCat, filterStock]);
+
+  if (status !== "ready") {
+    return (
+      <div className="min-h-screen bg-[#fbf6f1] px-6 pb-20 pt-32 text-[#1c1418]">
+        <div className="mx-auto flex min-h-[60vh] max-w-7xl items-center justify-center">
+          <div className="text-center">
+            <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Gestão de Inventário</p>
+            <h1 className="mt-4 font-serif text-4xl text-[#1c1418]">Carregando catálogo</h1>
+            <p className="mt-3 text-sm text-[#8b7c72]">Aguardando a sincronização com o Supabase.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#fbf6f1] px-6 pb-20 pt-32 text-[#1c1418]">

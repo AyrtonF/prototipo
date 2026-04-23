@@ -1,45 +1,28 @@
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { initialProducts } from "@/data/products";
-import { formatCurrency } from "@/lib/utils";
-import type { Product } from "@/types";
+import Image from "next/image";
+import { getPublicProducts } from "@/lib/products/catalog";
+import ShowcaseCarouselSection from "@/components/home/ShowcaseCarouselSection";
 
-const featuredPerfumes = initialProducts.filter((product) => product.category === "perfumes").slice(0, 4);
-const featuredJewelry = initialProducts.filter((product) => product.category === "joias").slice(0, 4);
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-function ShowcaseCard({ product }: { product: Product }) {
-  return (
-    <article className="group flex flex-col items-center gap-4">
-      <Link
-        href={`/produto/${product.slug}`}
-        className="flex h-75 w-full items-center justify-center border border-[#e9dbc4] bg-white px-6 py-8 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(48,20,31,0.08)]"
-      >
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="max-h-full w-auto object-contain transition-transform duration-700 group-hover:scale-105"
-        />
-      </Link>
+export default async function Home() {
+  const products = await getPublicProducts();
 
-      <div className="text-center">
-        <h3 className="font-serif text-[1.02rem] uppercase tracking-[0.08em] text-[#1f1418]">
-          {product.name}
-        </h3>
-        <p className="mt-1 text-sm font-semibold text-[#30141f]">{formatCurrency(product.price)}</p>
-      </div>
-    </article>
-  );
-}
+  const featuredPerfumes = products.filter((product) => product.category === "perfumes").slice(0, 4);
+  const featuredJewelry = products.filter((product) => product.category === "joias").slice(0, 4);
 
-export default function Home() {
   return (
     <div className="bg-white text-wine">
       <section className="relative overflow-hidden bg-wine text-cream">
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/perfume-home-principal.png"
             alt="Perfume principal da home"
-            className="h-full w-full object-cover object-right opacity-95"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-right opacity-95"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(48,20,31,0.92)_0%,rgba(48,20,31,0.88)_34%,rgba(48,20,31,0.68)_52%,rgba(48,20,31,0.25)_70%,rgba(48,20,31,0.08)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(190,108,53,0.14),transparent_28%),radial-gradient(circle_at_50%_78%,rgba(226,174,162,0.12),transparent_18%)]" />
@@ -70,9 +53,12 @@ export default function Home() {
       <section className="bg-white px-6 py-14 md:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.96fr_1.04fr]">
           <div className="overflow-hidden bg-white shadow-[0_22px_60px_rgba(48,20,31,0.08)]">
-            <img
+            <Image
               src="/Imagem-joia-homepage.png"
               alt="Joia editorial La Vie"
+              width={1400}
+              height={1100}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="h-full w-full object-cover"
             />
           </div>
@@ -110,105 +96,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-white px-6 py-20 md:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center">
-            <h2 className="font-serif text-4xl uppercase tracking-[0.06em] text-[#1d1217] md:text-5xl">
-              ESSÊNCIAS EM DESTAQUE
-            </h2>
-            <p className="mt-2 text-sm text-[#7b665d]">Essências que combinam com você</p>
-          </div>
+      <ShowcaseCarouselSection
+        title="Essências em destaque"
+        subtitle="Essências que combinam com você"
+        products={featuredPerfumes}
+        ctaHref="/perfumes"
+        ctaLabel="Ver tudo"
+        emptyMessage="Nenhum produto disponível"
+      />
 
-          <div className="relative mt-14">
-            <button
-              type="button"
-              className="absolute left-0 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
-              aria-label="Voltar produtos em destaque"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {featuredPerfumes.map((product) => (
-                <ShowcaseCard key={product.id} product={product} />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="absolute right-0 top-1/2 z-10 hidden translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
-              aria-label="Avançar produtos em destaque"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-
-          <div className="mt-10 flex justify-center">
-            <Link
-              href="/perfumes"
-              className="inline-flex min-w-40 items-center justify-center rounded-full border border-[#e5d4c0] bg-white px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-[#30141f] transition-colors duration-300 hover:bg-[#fff6e0]"
-            >
-              Ver tudo
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white px-6 py-20 md:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center">
-            <h2 className="font-serif text-4xl uppercase tracking-[0.06em] text-[#1d1217] md:text-5xl">
-              BRILHO ATEMPORAL
-            </h2>
-            <p className="mt-2 text-sm text-[#7b665d]">Brilhos que te destacam</p>
-          </div>
-
-          <div className="relative mt-14">
-            <button
-              type="button"
-              className="absolute left-0 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
-              aria-label="Voltar joias em destaque"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {featuredJewelry.map((product) => (
-                <ShowcaseCard key={product.id} product={product} />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="absolute right-0 top-1/2 z-10 hidden translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex"
-              aria-label="Avançar joias em destaque"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-
-          <div className="mt-10 flex justify-center">
-            <Link
-              href="/joias"
-              className="inline-flex min-w-40 items-center justify-center rounded-full border border-[#e5d4c0] bg-white px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-[#30141f] transition-colors duration-300 hover:bg-[#fff6e0]"
-            >
-              Ver tudo
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ShowcaseCarouselSection
+        title="Brilho Atemporal"
+        subtitle="Brilhos que te destacam"
+        products={featuredJewelry}
+        ctaHref="/joias"
+        ctaLabel="Ver tudo"
+        emptyMessage="Nenhum produto disponível"
+      />
 
       <section className="bg-white px-6 py-24 md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
           <div className="relative min-h-120 overflow-hidden">
-           
-
             <div className="absolute bottom-10 left-0 right-0 flex justify-center">
-                <img
-                  src="/imagem-perfume-homepage.png"
-                  alt="Perfume em destaque"
-                  className="h-full w-full object-cover"
-                />
+              <Image
+                src="/imagem-perfume-homepage.png"
+                alt="Perfume em destaque"
+                width={1400}
+                height={1100}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
 

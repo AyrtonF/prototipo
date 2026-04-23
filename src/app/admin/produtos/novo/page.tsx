@@ -91,8 +91,6 @@ export default function NovoProdutoPage() {
     } else if (data.category === "joias") {
       if (!data.finish) errs.push("finish");
       if (!data.dimensions) errs.push("dimensions");
-      // Segunda imagem é obrigatória para joias (imagem lifestyle)
-      if (!data.images?.[1]) errs.push("img1");
     }
     
     setErrors(errs);
@@ -141,10 +139,9 @@ export default function NovoProdutoPage() {
   };
 
   const removeImageSlot = (index: number) => {
-    // Não permite remover se tiver menos de 2 imagens (ou 2 para joias)
-    const minImages = formData.category === "joias" ? 2 : 1;
+    const minImages = 1;
     if ((formData.images?.length || 0) <= minImages) {
-      showToast(`Mínimo de ${minImages === 2 ? "duas imagens" : "uma imagem"} obrigatório${minImages === 2 ? "s" : ""}!`, "error");
+      showToast("Mínimo de uma imagem obrigatório!", "error");
       return;
     }
     
@@ -209,7 +206,7 @@ export default function NovoProdutoPage() {
                 <div className="flex items-center justify-between">
                   <label className="text-[9px] block font-bold uppercase tracking-widest text-[#8b7c72]">
                     {index === 0 && "Imagem Principal *"}
-                    {index === 1 && formData.category === "joias" && "Lifestyle (pessoa usando) *"}
+                    {index === 1 && formData.category === "joias" && "Lifestyle (pessoa usando) - opcional"}
                     {index === 1 && formData.category === "perfumes" && "Imagem Secundária"}
                     {index > 1 && `Imagem ${index + 1}`}
                   </label>
@@ -311,16 +308,19 @@ export default function NovoProdutoPage() {
             <div>
               <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Preço (R$) *</label>
               <input 
-                type="number"
-                min="0"
-                step="0.01"
+                type="text"
+                inputMode="numeric"
                 className={cn(
                   "w-full rounded-xl bg-[#fbf6f1] p-4 text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
                   errors.includes("price") ? "border-2 border-red-500" : ""
                 )}
-                value={formData.price ?? ''}
-                onChange={e => setFormData({...formData, price: e.target.value ? Number(e.target.value) : undefined})}
-                placeholder="0.00"
+                value={priceInput}
+                onChange={(e) => {
+                  const formatted = formatPriceInput(e.target.value);
+                  setPriceInput(formatted);
+                  setFormData({ ...formData, price: parsePriceInput(formatted) });
+                }}
+                placeholder="R$ 0,00"
               />
             </div>
 

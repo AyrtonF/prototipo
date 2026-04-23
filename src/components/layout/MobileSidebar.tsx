@@ -18,8 +18,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-
+    const timer = window.setTimeout(() => setIsMounted(true), 0);
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -27,6 +26,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
     }
 
     return () => {
+      window.clearTimeout(timer);
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);

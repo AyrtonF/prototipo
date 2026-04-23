@@ -44,6 +44,7 @@ export default function EditarProdutoPage() {
   const productId = params.id as string;
   
   const { products, updateProduct } = useProductStore();
+  const status = useProductStore((state) => state.status);
   const { showToast, ToastContainer } = useToast();
   const [errors, setErrors] = useState<string[]>([]);
   const fileInputs = useRef<(HTMLInputElement | null)[]>([]);
@@ -76,15 +77,30 @@ export default function EditarProdutoPage() {
   useEffect(() => {
     const product = products.find(p => p.id === productId);
     if (product) {
-      setIsLoading(false);
-      setFormData(product);
-      setPriceInput(formatPriceInput(String(product.price)));
+      const timer = window.setTimeout(() => {
+        setIsLoading(false);
+        setFormData(product);
+        setPriceInput(formatPriceInput(String(product.price)));
+      }, 0);
+
+      return () => window.clearTimeout(timer);
     } else {
       showToast("Produto não encontrado!", "error");
       const timer = setTimeout(() => router.push('/admin'), 2000);
       return () => clearTimeout(timer);
     }
   }, [products, productId, router, showToast]);
+
+  if (status !== "ready") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#fbf6f1] px-4 pb-12 pt-32 text-[#1c1418] sm:px-6 sm:pb-20">
+        <div className="text-center">
+          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-copper border-t-transparent"></div>
+          <p className="text-[#7b665d]">Carregando catálogo...</p>
+        </div>
+      </div>
+    );
+  }
 
   const validate = (data: Partial<Product> = formData) => {
     const errs = [];
@@ -105,7 +121,6 @@ export default function EditarProdutoPage() {
     } else if (data.category === "joias") {
       if (!data.finish) errs.push("finish");
       if (!data.dimensions) errs.push("dimensions");
-      if (!data.images?.[1]) errs.push("img1");
     }
     
     setErrors(errs);
@@ -154,9 +169,9 @@ export default function EditarProdutoPage() {
   };
 
   const removeImageSlot = (index: number) => {
-    const minImages = formData.category === "joias" ? 2 : 1;
+    const minImages = 1;
     if ((formData.images?.length || 0) <= minImages) {
-      showToast(`Mínimo de ${minImages === 2 ? "duas imagens" : "uma imagem"} obrigatório${minImages === 2 ? "s" : ""}!`, "error");
+      showToast("Mínimo de uma imagem obrigatório!", "error");
       return;
     }
     
@@ -232,7 +247,7 @@ export default function EditarProdutoPage() {
                 <div className="flex items-center justify-between">
                   <label className="text-[9px] block font-bold uppercase tracking-widest text-[#8b7c72]">
                     {index === 0 && "Imagem Principal *"}
-                    {index === 1 && formData.category === "joias" && "Lifestyle (pessoa usando) *"}
+                    {index === 1 && formData.category === "joias" && "Lifestyle (pessoa usando) - opcional"}
                     {index === 1 && formData.category === "perfumes" && "Imagem Secundária"}
                     {index > 1 && `Imagem ${index + 1}`}
                   </label>

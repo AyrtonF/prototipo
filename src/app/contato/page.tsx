@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const WHATSAPP_NUMBER = "5511900000000";
+const WHATSAPP_NUMBER = "5581991530002"; // Substitua pelo número de telefone desejado, no formato internacional (ex: "5511999999999")
 
 export default function ContatoPage() {
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ export default function ContatoPage() {
           ENTRE EM CONTATO
         </p>
         <p className="mx-auto mt-4 max-w-2xl text-[17px] leading-7 text-[#2e2523] md:text-[18px]">
-          Converse com a gente por esse número <span className="font-semibold text-copper">(11) 9 0000-0000</span> ou escreva sua mensagem abaixo.
+          Converse com a gente por esse número <span className="font-semibold text-copper">{WHATSAPP_NUMBER}</span> ou escreva sua mensagem abaixo.
         </p>
 
         <form onSubmit={handleSubmit} className="mx-auto mt-12 w-full max-w-92 space-y-3 text-left sm:max-w-104">

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useProductStore } from "@/store/productStore";
 import ProductCard from "@/components/products/ProductCard";
 import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, X } from "lucide-react";
@@ -12,9 +12,10 @@ const ITEMS_PER_PAGE = 9;
 
 export default function JoiasPage() {
   const products = useProductStore((state) => state.products);
+  const status = useProductStore((state) => state.status);
   const [searchTerm, setSearchTerm] = useState("");
   const [material, setMaterial] = useState("all");
-  const [priceRange, setPriceRange] = useState(50000);
+  const [priceRange, setPriceRange] = useState(1000000);
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,28 +31,45 @@ export default function JoiasPage() {
   }, [joias, searchTerm, material, priceRange]);
 
   const totalPages = Math.max(1, Math.ceil(filteredJoias.length / ITEMS_PER_PAGE));
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, material, priceRange]);
-
-  useEffect(() => {
-    setCurrentPage((page) => Math.min(page, totalPages));
-  }, [totalPages]);
+  const safeCurrentPage = Math.min(currentPage, totalPages);
 
   const visibleJoias = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const startIndex = (safeCurrentPage - 1) * ITEMS_PER_PAGE;
     return filteredJoias.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredJoias, currentPage]);
+  }, [filteredJoias, safeCurrentPage]);
+
+  if (status !== "ready") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white px-6 text-center text-gold">
+        <div>
+          <p className="font-serif text-2xl uppercase tracking-[0.3em]">Carregando joias...</p>
+          <p className="mt-3 text-sm text-zinc-400">Buscando o catálogo no Supabase.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white px-6 text-center text-[#30141f]">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Catálogo vazio</p>
+          <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.05] md:text-5xl">Nenhum produto cadastrado</h1>
+          <p className="mt-4 text-sm text-[#7b665d]">Cadastre joias no painel administrativo para exibir esta coleção.</p>
+        </div>
+      </div>
+    );
+  }
 
   const resetFilters = () => {
     setSearchTerm("");
     setMaterial("all");
     setPriceRange(50000);
+    setCurrentPage(1);
   };
 
-  const visibleStart = filteredJoias.length > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0;
-  const visibleEnd = Math.min(currentPage * ITEMS_PER_PAGE, filteredJoias.length);
+  const visibleStart = filteredJoias.length > 0 ? (safeCurrentPage - 1) * ITEMS_PER_PAGE + 1 : 0;
+  const visibleEnd = Math.min(safeCurrentPage * ITEMS_PER_PAGE, filteredJoias.length);
 
   return (
     <div className="min-h-screen bg-white px-4 pb-16 pt-8 sm:px-6 lg:px-8">
@@ -112,7 +130,10 @@ export default function JoiasPage() {
                     placeholder="Buscar por nome..."
                     className="w-full rounded-full border border-transparent bg-[#f4f0ed] py-3 pl-10 pr-4 text-sm text-[#30141f] outline-none transition-all placeholder:text-[#aea39b] focus:border-[#e3b69f] focus:bg-white focus:ring-2 focus:ring-[#e8c7b9]/50"
                     value={searchTerm}
-                    onChange={(event) => setSearchTerm(event.target.value)}
+                    onChange={(event) => {
+                      setSearchTerm(event.target.value);
+                      setCurrentPage(1);
+                    }}
                   />
                   {searchTerm && (
                     <button
@@ -130,7 +151,10 @@ export default function JoiasPage() {
                     {materialOptions.map((value) => (
                       <button
                         key={value}
-                        onClick={() => setMaterial(value)}
+                        onClick={() => {
+                          setMaterial(value);
+                          setCurrentPage(1);
+                        }}
                         className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all ${
                           material === value
                             ? "bg-copper text-white shadow-[0_12px_24px_rgba(190,108,53,0.22)]"
@@ -153,15 +177,18 @@ export default function JoiasPage() {
                   <input
                     type="range"
                     min="500"
-                    max="50000"
+                    max="1000000"
                     step="500"
                     value={priceRange}
-                    onChange={(event) => setPriceRange(Number(event.target.value))}
+                    onChange={(event) => {
+                      setPriceRange(Number(event.target.value));
+                      setCurrentPage(1);
+                    }}
                     className="w-full cursor-pointer accent-[#be6c35]"
                   />
                   <div className="mt-2 flex justify-between text-[10px] text-[#9f9289]">
                     <span>R$ 500</span>
-                    <span>R$ 50.000</span>
+                    <span>R$ 1.000.000</span>
                   </div>
                 </div>
 

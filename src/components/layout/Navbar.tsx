@@ -118,7 +118,7 @@ export default function Navbar() {
             <label className="relative flex w-full items-center">
               <Search size={16} className="pointer-events-none absolute left-4 text-[#8c6036]" />
               <input
-                type="search"
+                type="text"
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search for products..."

@@ -71,7 +71,7 @@ export default function Navbar() {
       <MobileSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       
       <nav className={cn(
-        "fixed top-0 left-0 w-full z-50 border-b border-[#cf8a52]/35 bg-copper text-cream shadow-[0_10px_30px_rgba(48,20,31,0.1)] transition-all duration-500 ease-in-out",
+        "fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-copper text-cream shadow-[0_10px_30px_rgba(48,20,31,0.1)] transition-all duration-500 ease-in-out",
         isScrolled ? "bg-copper/95 backdrop-blur-md" : "bg-copper"
       )}>
         <div className="mx-auto flex h-18 max-w-7xl items-center gap-4 px-4 sm:px-6 md:gap-6 md:px-8">
@@ -90,7 +90,7 @@ export default function Navbar() {
 
           {/* Brand Logo */}
           <Link href="/" className={cn(
-            "relative flex min-w-16 items-center gap-0 leading-none transition-opacity duration-300",
+            "relative flex w-fit flex-col items-center gap-1 leading-none transition-opacity duration-300",
             isSidebarOpen ? "opacity-0 md:opacity-100" : "opacity-100"
           )}>
             <span className="relative block h-11 w-11 shrink-0 md:h-12 md:w-12">
@@ -103,33 +103,26 @@ export default function Navbar() {
                 priority
               />
             </span>
-            <span className="relative -ml-2 block h-10 w-14 shrink-0 md:h-11 md:w-16">
-              <Image
-                src="/LA-VIE.png"
-                alt="LA VIE"
-                fill
-                sizes="64px"
-                className="object-contain"
-                priority
-              />
+            <span className="font-serif text-[0.72rem] uppercase tracking-[0.38em] text-cream md:text-[0.78rem]">
+              La Vie
             </span>
           </Link>
 
           <div className="relative hidden flex-1 md:flex">
             <label className="relative flex w-full items-center">
-              <Search size={16} className="pointer-events-none absolute left-4 text-[#8c6036]" />
+              <Search size={16} className="pointer-events-none absolute left-4 text-muted" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search for products..."
-                className="h-11 w-full rounded-full border border-white/20 bg-[#fff7eb] pl-11 pr-10 text-sm text-[#30141f] outline-none placeholder:text-[#8d7a6d]"
+                className="h-11 w-full rounded-full border border-border bg-surface pl-11 pr-10 text-sm text-foreground outline-none placeholder:text-muted"
               />
               {searchTerm && (
                 <button
                   type="button"
                   onClick={() => setSearchTerm("")}
-                  className="absolute right-3 inline-flex h-6 w-6 items-center justify-center rounded-full text-[#8c6036] transition-colors hover:bg-[#f3e8dc]"
+                  className="absolute right-3 inline-flex h-6 w-6 items-center justify-center rounded-full text-muted transition-colors hover:bg-black/5 dark:hover:bg-white/10"
                   aria-label="Limpar busca"
                 >
                   <X size={14} />
@@ -138,12 +131,12 @@ export default function Navbar() {
             </label>
 
             {searchTerm.trim() && (
-              <div className="absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-3xl border border-[#eadfd4] bg-white shadow-[0_24px_60px_rgba(48,20,31,0.12)]">
-                <div className="flex items-center justify-between border-b border-[#f0e5db] px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8b7c72]">
+              <div className="absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-3xl border border-border bg-surface shadow-[0_24px_60px_rgba(48,20,31,0.12)]">
+                <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-muted">
                     Resultados
                   </p>
-                  <span className="text-[10px] uppercase tracking-[0.22em] text-[#b59c8a]">
+                  <span className="text-[10px] uppercase tracking-[0.22em] text-muted">
                     {searchResults.length} encontrados
                   </span>
                 </div>
@@ -155,18 +148,18 @@ export default function Navbar() {
                         key={product.id}
                         href={`/produto/${product.slug}`}
                         onClick={() => setSearchTerm("")}
-                        className="flex items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-[#faf5f0]"
+                        className="flex items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                       >
                         <div className="min-w-0">
-                          <p className="truncate font-serif text-[1rem] text-[#1c1418]">
+                          <p className="truncate font-serif text-[1rem] text-foreground">
                             {product.name}
                           </p>
-                          <p className="mt-1 text-[0.72rem] uppercase tracking-[0.22em] text-[#8b7c72]">
+                          <p className="mt-1 text-[0.72rem] uppercase tracking-[0.22em] text-muted">
                             {product.category === "perfumes" ? "Perfume" : "Semi-Joia"}
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-2 text-[#c87634]">
+                        <div className="flex items-center gap-2 text-copper">
                           <span className="text-sm font-semibold">
                             {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(product.price)}
                           </span>
@@ -176,7 +169,7 @@ export default function Navbar() {
                     ))
                   ) : (
                     <div className="px-4 py-8 text-center">
-                      <p className="text-sm text-[#6e574d]">Nenhum resultado encontrado.</p>
+                      <p className="text-sm text-muted">Nenhum resultado encontrado.</p>
                     </div>
                   )}
                 </div>

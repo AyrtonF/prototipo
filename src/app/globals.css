@@ -2,43 +2,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffeec9;
+  color-scheme: light;
+  --background: #fffaf6;
   --foreground: #30141f;
+  --surface: #fbf6f1;
+  --surface-2: #f3efec;
+  --border: #eadfd4;
+  --muted: #6e574d;
+
   --cream: #ffeec9;
   --rose: #e2aea2;
   --wine: #30141f;
-  --copper: #be6c35;
-  --surface: #fff8e8;
-  --muted: #7b665d;
+  --copper: #30141f;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #13090e;
+  --foreground: #f6e6d8;
+  --surface: #1a1015;
+  --surface-2: #24131b;
+  --border: #37212c;
+  --muted: #b79f93;
+
+  --cream: #f3dcc5;
+  --rose: #cb9588;
+  --wine: #30141f;
+  --copper: #30141f;
 }
 
 @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-cream: var(--cream);
   --color-rose: var(--rose);
   --color-wine: var(--wine);
   --color-copper: var(--copper);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
   --color-muted: var(--muted);
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
+html,
+body {
+  background-color: var(--background);
 }
 
 body {
-  background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, h2, h3, .serif {
-  font-family: var(--font-serif);
-  letter-spacing: -0.03em;
+.text-btn-wine {
+  color: var(--cream);
 }
 
-.text-balance {
-  text-wrap: balance;
+.text-cream {
+  color: var(--cream);
+}
+
+.dark :is(.bg-white, .bg-cream, .bg-\[\#fbf6f1\], .bg-\[\#fff8e8\], .bg-\[\#f3efec\], .bg-\[\#f4f0ed\], .bg-\[\#faf5ef\], .bg-\[\#faf7f4\], .bg-\[\#fff5f1\], .bg-\[\#fff7eb\], .bg-\[\#d9d9d9\]) {
+  background-color: var(--surface);
+}
+
+.dark :is(.bg-white\/90, .bg-white\/95, .bg-white\/80, .bg-white\/70, .bg-white\/60, .bg-white\/55, .bg-white\/20, .bg-white\/15, .bg-white\/10, .bg-white\/5) {
+  background-color: color-mix(in oklab, var(--surface) 92%, transparent);
+}
+
+.dark :is(.text-\[\#1c1418\], .text-\[\#1d1217\], .text-\[\#1c1217\], .text-\[\#1f1517\], .text-\[\#111111\], .text-\[\#30141f\], .text-copper, .text-wine) {
+  color: var(--foreground);
+}
+
+.dark :is(.text-\[\#8b7c72\], .text-\[\#7b665d\], .text-\[\#8a796f\], .text-\[\#6e574d\], .text-\[\#4f433c\], .text-\[\#a07d61\], .text-\[\#b59c8a\], .text-\[\#aea39b\], .text-\[\#c87634\], .text-\[\#d65f40\]) {
+  color: var(--muted);
+}
+
+.dark :is(.border-\[\#eadfd4\], .border-\[\#eadfd7\], .border-\[\#e3d8cf\], .border-\[\#e5d7cf\], .border-\[\#e6cfad\], .border-\[\#eadfda\], .border-\[\#ded6cf\], .border-\[\#e5dcd5\], .border-\[\#e4dbd4\], .border-\[\#cf8a52\]\/35) {
+  border-color: var(--border);
+}
+
+.dark :is(.hover\:bg-white\/60:hover, .hover\:bg-white\/70:hover, .hover\:bg-white\/20:hover, .hover\:bg-white\/25:hover, .hover\:bg-\[\#faf5ef\]:hover, .hover\:bg-\[\#faf7f4\]:hover, .hover\:bg-\[\#f8f4f1\]:hover, .hover\:bg-\[\#f3e8dc\]:hover) {
+  background-color: color-mix(in oklab, var(--foreground) 8%, transparent);
 }

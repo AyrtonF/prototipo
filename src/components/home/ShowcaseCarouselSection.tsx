@@ -21,7 +21,8 @@ function ShowcaseCard({ product }: { product: Product }) {
     <article className="group flex flex-col items-center gap-4">
       <Link
         href={`/produto/${product.slug}`}
-        className="relative flex h-75 w-full items-center justify-center border border-[#e9dbc4] bg-white px-6 py-8 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(48,20,31,0.08)]"
+        /* Substituído bg-white por bg-surface e borda fixa por variável */
+        className="relative flex h-75 w-full items-center justify-center border border-[#e2aea233] bg-surface px-6 py-8 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(48,20,31,0.12)]"
       >
         <Image
           src={product.images[0]}
@@ -33,10 +34,11 @@ function ShowcaseCard({ product }: { product: Product }) {
       </Link>
 
       <div className="text-center">
-        <h3 className="font-serif text-[1.02rem] uppercase tracking-[0.08em] text-[#1f1418]">
+        {/* Títulos agora usam text-foreground para adaptar ao dark mode */}
+        <h3 className="font-serif text-[1.02rem] uppercase tracking-[0.08em] text-foreground">
           {product.name}
         </h3>
-        <p className="mt-1 text-sm font-semibold text-[#30141f]">{formatCurrency(product.price)}</p>
+        <p className="mt-1 text-sm font-semibold text-wine dark:text-[#e2aea2]">{formatCurrency(product.price)}</p>
       </div>
     </article>
   );
@@ -56,10 +58,7 @@ export default function ShowcaseCarouselSection({
   const maxStartIndex = Math.max(products.length - visibleCount, 0);
 
   const visibleProducts = useMemo(() => {
-    if (products.length === 0) {
-      return [];
-    }
-
+    if (products.length === 0) return [];
     return products.slice(startIndex, startIndex + visibleCount);
   }, [products, startIndex]);
 
@@ -72,25 +71,27 @@ export default function ShowcaseCarouselSection({
   };
 
   return (
-    <section className="bg-white px-6 py-20 md:py-24">
+    /* bg-background garante que a seção mude de branco para o preto do dark mode */
+    <section className="bg-background px-6 py-20 md:py-24 transition-colors duration-300">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <h2 className="font-serif text-4xl uppercase tracking-[0.06em] text-[#1d1217] md:text-5xl">
+          <h2 className="font-serif text-4xl uppercase tracking-[0.06em] text-foreground md:text-5xl">
             {title}
           </h2>
-          <p className="mt-2 text-sm text-[#7b665d]">{subtitle}</p>
+          <p className="mt-2 text-sm text-muted">{subtitle}</p>
         </div>
 
         {products.length === 0 ? (
-          <div className="mt-14 flex min-h-80 items-center justify-center rounded-[1.75rem] border border-[#eadfda] bg-white px-6 text-center text-[#7b665d] shadow-[0_18px_50px_rgba(48,20,31,0.04)]">
+          <div className="mt-14 flex min-h-80 items-center justify-center rounded-[1.75rem] border border-[#e2aea21a] bg-surface px-6 text-center shadow-sm">
             <p className="text-sm uppercase tracking-[0.22em] text-copper">{emptyMessage}</p>
           </div>
         ) : (
           <div className="relative mt-14">
+            {/* Botões de navegação adaptados */}
             <button
               type="button"
               onClick={goToPrevious}
-              className="absolute -left-10 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex lg:-left-14"
+              className="absolute -left-10 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#e2aea233] bg-surface p-2 text-foreground shadow-lg transition-transform hover:scale-110 md:flex lg:-left-14"
               aria-label={`Voltar ${title.toLowerCase()}`}
             >
               <ChevronLeft size={20} />
@@ -105,7 +106,7 @@ export default function ShowcaseCarouselSection({
             <button
               type="button"
               onClick={goToNext}
-              className="absolute -right-10 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#e5d4c0] bg-white p-2 text-[#30141f] shadow-[0_12px_30px_rgba(48,20,31,0.12)] md:flex lg:-right-14"
+              className="absolute -right-10 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#e2aea233] bg-surface p-2 text-foreground shadow-lg transition-transform hover:scale-110 md:flex lg:-right-14"
               aria-label={`Avançar ${title.toLowerCase()}`}
             >
               <ChevronRight size={20} />
@@ -116,7 +117,8 @@ export default function ShowcaseCarouselSection({
         <div className="mt-10 flex justify-center">
           <Link
             href={ctaHref}
-            className="inline-flex min-w-40 items-center justify-center rounded-full border border-[#e5d4c0] bg-white px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-[#30141f] transition-colors duration-300 hover:bg-[#fff6e0]"
+            /* Botão "Ver tudo" agora usa bg-surface e text-foreground */
+            className="inline-flex min-w-40 items-center justify-center rounded-full border border-[#e2aea24d] bg-surface px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-foreground transition-all duration-300 hover:bg-[#42202e] hover:text-[#ffeec9]"
           >
             {ctaLabel}
           </Link>

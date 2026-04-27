@@ -18,7 +18,7 @@ export default function QuizResultadoPage() {
 
 function QuizResultadoFallback() {
   return (
-    <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background px-4 pb-16 pt-6 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center text-center">
         <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Sua assinatura olfativa</p>
         <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.02] text-copper md:text-5xl">
@@ -119,14 +119,14 @@ function QuizResultadoContent() {
 
   if (status !== "ready") {
     return (
-      <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-background px-4 pb-16 pt-6 sm:px-6 lg:px-8">
         <ToastContainer />
         <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Sua assinatura olfativa</p>
           <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.02] text-copper md:text-5xl">
             Carregando recomendações
           </h1>
-          <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#4f433c]">
+          <p className="mt-4 max-w-xl text-[15px] leading-7 text-muted">
             Estamos sincronizando os perfumes do banco para calcular o resultado do quiz.
           </p>
         </div>
@@ -136,20 +136,20 @@ function QuizResultadoContent() {
 
   if (recommendations.length === 0) {
     return (
-      <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-background px-4 pb-16 pt-6 sm:px-6 lg:px-8">
         <ToastContainer />
         <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-copper">Sua assinatura olfativa</p>
           <h1 className="mt-4 font-serif text-4xl uppercase leading-[1.02] text-copper md:text-5xl">
             Resultado indisponível
           </h1>
-          <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#4f433c]">
+          <p className="mt-4 max-w-xl text-[15px] leading-7 text-muted">
             Não encontramos perfumes selecionados para este resultado. Volte ao quiz para refazer suas escolhas.
           </p>
           <button
             type="button"
             onClick={handleReset}
-            className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-copper px-6 text-sm font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-[#b86429]"
+            className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-copper px-6 text-sm font-semibold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-[#42202e]"
           >
             voltar ao quiz
           </button>
@@ -159,7 +159,7 @@ function QuizResultadoContent() {
   }
 
   return (
-    <div className="min-h-screen bg-white px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background px-4 pb-16 pt-6 sm:px-6 lg:px-8">
       <ToastContainer />
 
       <div className="mx-auto max-w-7xl py-4 sm:py-8 lg:py-10">

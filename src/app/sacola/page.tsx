@@ -100,7 +100,7 @@ export default function SacolaPage() {
           <p className="mb-12 max-w-md text-[10px] uppercase tracking-[0.28em] text-muted">
             Explore nossa coleção e encontre algo especial.
           </p>
-          <Link href="/" className="inline-flex items-center justify-center rounded-full bg-copper px-12 py-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground transition-colors hover:bg-[#42202e]">
+          <Link href="/" className="inline-flex items-center text-cream justify-center rounded-full bg-copper px-12 py-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground transition-colors hover:bg-[#42202e]">
             Voltar para a Home
           </Link>
         </div>

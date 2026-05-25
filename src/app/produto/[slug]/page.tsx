@@ -250,7 +250,7 @@ function ProdutoContent({
             </div>
 
             <div className="mt-6 flex flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center">
-              <div className="inline-flex h-12 items-center rounded-full bg-surface-2 px-1.5">
+              <div className="inline-flex h-12 w-full items-center justify-between rounded-full bg-surface-2 px-3 sm:w-auto">
                 <button
                   type="button"
                   onClick={decrementQuantity}
@@ -271,12 +271,11 @@ function ProdutoContent({
                   <Plus size={18} />
                 </button>
               </div>
-
               <button
                 type="button"
                 onClick={handleAddToCart}
                 disabled={availableUnits <= 0}
-                className="inline-flex h-12 flex-1 items-center justify-center gap-3 rounded-full bg-copper px-6 text-sm font-semibold uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:bg-[#42202e] disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-12 w-full sm:flex-1 items-center justify-center gap-3 rounded-full bg-copper px-6 text-sm font-semibold uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:bg-[#42202e] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ShoppingBag size={18} />
                 <span>Adicionar à Sacola</span>

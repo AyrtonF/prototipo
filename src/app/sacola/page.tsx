@@ -100,7 +100,7 @@ export default function SacolaPage() {
           <p className="mb-12 max-w-md text-[10px] uppercase tracking-[0.28em] text-muted">
             Explore nossa coleção e encontre algo especial.
           </p>
-          <Link href="/" className="inline-flex items-center text-cream justify-center rounded-full bg-copper px-12 py-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground transition-colors hover:bg-[#42202e]">
+          <Link href="/" className="inline-flex items-center text-cream justify-center rounded-full bg-copper px-12 py-5 text-[10px] font-semibold uppercase tracking-[0.26em] transition-colors hover:bg-[#42202e]">
             Voltar para a Home
           </Link>
         </div>
@@ -122,27 +122,31 @@ export default function SacolaPage() {
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] lg:gap-16">
         <div className="space-y-6">
           {visibleCart.map((item) => (
-            <div key={item.id} className="flex items-center gap-5 rounded-4xl border border-border bg-surface p-4 shadow-[0_16px_40px_rgba(48,20,31,0.05)] animate-fade-in-up">
-              <div className="h-28 w-24 overflow-hidden rounded-2xl bg-surface-2">
-                <Image src={item.images[0]} alt={item.name} width={96} height={112} className="h-full w-full object-cover" />
+            <div key={item.id} className="flex flex-col gap-4 rounded-4xl border border-border bg-surface p-4 shadow-[0_16px_40px_rgba(48,20,31,0.05)] animate-fade-in-up md:flex-row md:items-center md:gap-5">
+              <div className="flex items-center gap-5">
+                <div className="h-28 w-24 shrink-0 overflow-hidden rounded-2xl bg-surface-2">
+                  <Image src={item.images[0]} alt={item.name} width={96} height={112} className="h-full w-full object-cover" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-serif text-lg text-foreground">{item.name}</h3>
+                  <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-muted">{item.category === 'joias' ? 'Semi-Joia' : 'Perfume'}</p>
+                  <p className="font-semibold text-copper">{formatCurrency(item.price)}</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-serif text-lg text-foreground">{item.name}</h3>
-                <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-muted">{item.category === 'joias' ? 'Semi-Joia' : 'Perfume'}</p>
-                <p className="font-semibold text-copper">{formatCurrency(item.price)}</p>
-              </div>
-              <div className="flex items-center space-x-4 rounded-full border border-border bg-surface-2 px-4 py-2">
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-muted transition-colors hover:text-copper">
-                  <Minus size={14} />
+              <div className="flex w-full items-center justify-between gap-4 md:ml-auto md:w-auto md:justify-end">
+                <div className="flex items-center space-x-4 rounded-full border border-border bg-surface-2 px-4 py-2">
+                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-black/5 dark:hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40">
+                    <Minus size={14} />
+                  </button>
+                  <span className="w-4 text-center text-sm font-bold text-foreground">{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-black/5 dark:hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40">
+                    <Plus size={14} />
+                  </button>
+                </div>
+                <button onClick={() => removeFromCart(item.id)} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
+                  <Trash2 size={18} />
                 </button>
-                <span className="w-4 text-center text-sm font-bold text-foreground">{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-muted transition-colors hover:text-copper">
-                  <Plus size={14} />
-                </button>
               </div>
-              <button onClick={() => removeFromCart(item.id)} className="text-muted transition-colors hover:text-red-500">
-                <Trash2 size={18} />
-              </button>
             </div>
           ))}
         </div>
@@ -166,7 +170,7 @@ export default function SacolaPage() {
           </div>
           <button 
             onClick={() => setShowModal(true)}
-            className="flex w-full items-center justify-center space-x-4 rounded-full bg-copper py-5 text-[10px] font-bold uppercase tracking-[0.3em] text-foreground transition-colors hover:bg-[#42202e]"
+            className="flex w-full items-center justify-center space-x-4 rounded-full bg-copper py-5 text-[10px] font-bold uppercase tracking-[0.3em] text-cream transition-colors hover:bg-[#42202e]"
           >
             <span>Finalizar Pedido</span>
             <ArrowRight size={16} />
@@ -197,7 +201,7 @@ export default function SacolaPage() {
               </div>
               <button 
                 onClick={handleCheckout}
-                className="w-full rounded-full bg-copper py-5 text-[10px] font-bold uppercase tracking-widest text-foreground transition-colors hover:bg-[#42202e]"
+                className="w-full rounded-full bg-copper py-5 text-[10px] font-bold uppercase tracking-widest text-cream transition-colors hover:bg-[#42202e]"
               >
                 Ir para o WhatsApp
               </button>

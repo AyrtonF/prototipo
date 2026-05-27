@@ -95,7 +95,7 @@ export default function Navbar() {
           )}>
             <span className="relative block h-11 w-11 shrink-0 md:h-12 md:w-12">
               <Image
-                src="/logo-navbar.png"
+                src="/La vie (bege claro).png"
                 alt="La Vie"
                 fill
                 sizes="56px"

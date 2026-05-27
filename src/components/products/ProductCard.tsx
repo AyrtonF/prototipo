@@ -43,7 +43,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 src={product.images[0]}
                 alt={product.name}
                 className={cn(
-                  "relative z-10 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                  "relative z-10 h-full w-full object-contain object-center p-3 transition-transform duration-700 ease-out group-hover:scale-105"
                 )}
               />
               {showPerfumeHover && <PerfumeHoverEffect product={product} />}

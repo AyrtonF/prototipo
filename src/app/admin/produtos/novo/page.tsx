@@ -12,6 +12,24 @@ import { useToast } from "@/hooks/useToast";
 const perfumeOccasions: Occasion[] = ["Dia a dia", "Trabalho", "Noite", "Eventos especiais"];
 const perfumeStyles: Style[] = ["Elegante", "Moderno", "Clássico", "Ousado"];
 
+const adminFieldClass =
+  "w-full rounded-xl border border-transparent bg-[#fbf6f1] p-4 text-[#1c1418] outline-none transition-all focus:border-copper focus:ring-2 focus:ring-copper dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:placeholder:text-[#b79f93] dark:focus:border-[#7b4a5a] dark:focus:ring-[#7b4a5a]/30";
+
+const adminCompactFieldClass =
+  "w-full rounded-xl border border-transparent bg-[#fbf6f1] p-3 text-sm text-[#1c1418] outline-none transition-all focus:border-copper focus:ring-2 focus:ring-copper dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:placeholder:text-[#b79f93] dark:focus:border-[#7b4a5a] dark:focus:ring-[#7b4a5a]/30";
+
+const adminSelectClass =
+  "w-full appearance-none rounded-xl border border-transparent bg-[#fbf6f1] p-4 text-[#1c1418] outline-none transition-all focus:border-copper focus:ring-2 focus:ring-copper dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:focus:border-[#7b4a5a] dark:focus:ring-[#7b4a5a]/30";
+
+const adminTextareaClass =
+  "w-full rounded-xl border border-transparent bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:border-copper focus:ring-2 focus:ring-copper resize-none dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:placeholder:text-[#b79f93] dark:focus:border-[#7b4a5a] dark:focus:ring-[#7b4a5a]/30";
+
+const adminPillTagClass =
+  "flex items-center gap-2 rounded-full bg-[#f2ece5] px-4 py-2 text-xs text-[#1c1418] dark:border dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8]";
+
+const adminActionButtonClass =
+  "group flex w-full items-center justify-center gap-3 rounded-xl border-2 border-transparent bg-[#f2ece5] px-4 py-3 transition-all hover:border-[#d9c0a8] hover:bg-[#f8efe6] dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:hover:border-[#7b4a5a] dark:hover:bg-[#2b1821]";
+
 function toggleSelection<T>(values: T[] | undefined, value: T) {
   const currentValues = values ?? [];
   return currentValues.includes(value)
@@ -229,8 +247,8 @@ export default function NovoProdutoPage() {
                 </div>
 
                 {imageUrl && (
-                  <div className="relative mb-4 overflow-hidden rounded-2xl bg-[#f6f1eb] aspect-square">
-                    <img src={imageUrl} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
+                  <div className="relative mb-4 overflow-hidden rounded-2xl bg-[#f6f1eb] aspect-square dark:bg-[#24131b]">
+                    <img src={imageUrl} alt={`Preview ${index + 1}`} className="h-full w-full object-contain p-3" />
                   </div>
                 )}
 
@@ -243,10 +261,7 @@ export default function NovoProdutoPage() {
                 <div className="space-y-2">
                   <input 
                     type="text"
-                    className={cn(
-                      "w-full rounded-xl bg-[#fbf6f1] p-3 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                      errors.includes(`img${index}`) ? "border-2 border-red-500" : ""
-                    )}
+                    className={cn(adminCompactFieldClass, errors.includes(`img${index}`) ? "border-2 border-red-500" : "")}
                     placeholder="Cole URL da imagem..."
                     value={imageUrl}
                     onChange={e => {
@@ -259,7 +274,7 @@ export default function NovoProdutoPage() {
                   <button
                     type="button"
                     onClick={() => fileInputs.current[index]?.click()}
-                    className="group flex w-full items-center justify-center gap-3 rounded-xl border-2 border-transparent bg-[#f2ece5] px-4 py-3 transition-all hover:border-[#d9c0a8] hover:bg-[#f8efe6]"
+                    className={adminActionButtonClass}
                   >
                     <Upload size={18} className="text-[#7b665d] transition-colors group-hover:text-copper" />
                     <span className="text-sm font-medium text-[#7b665d] transition-colors group-hover:text-copper">
@@ -289,10 +304,7 @@ export default function NovoProdutoPage() {
               <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Nome do Produto *</label>
               <input 
                 type="text"
-                className={cn(
-                  "w-full rounded-xl bg-[#fbf6f1] p-4 font-serif text-lg text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                  errors.includes("name") ? "border-2 border-red-500" : ""
-                )}
+                className={cn(adminFieldClass, "font-serif text-lg", errors.includes("name") ? "border-2 border-red-500" : "")}
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
                 placeholder="Ex: Dior Sauvage Eau de Parfum"
@@ -302,7 +314,7 @@ export default function NovoProdutoPage() {
             <div>
               <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Categoria *</label>
               <select 
-                className="w-full appearance-none rounded-xl bg-[#fbf6f1] p-4 text-xs font-bold uppercase tracking-widest text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper"
+                className={cn(adminSelectClass, "text-xs font-bold uppercase tracking-widest")}
                 value={formData.category}
                 onChange={e => setFormData({...formData, category: e.target.value as Category})}
               >
@@ -316,10 +328,7 @@ export default function NovoProdutoPage() {
               <input 
                 type="text"
                 inputMode="numeric"
-                className={cn(
-                  "w-full rounded-xl bg-[#fbf6f1] p-4 text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                  errors.includes("price") ? "border-2 border-red-500" : ""
-                )}
+                className={cn(adminFieldClass, errors.includes("price") ? "border-2 border-red-500" : "")}
                 value={priceInput}
                 onChange={(e) => {
                   const formatted = formatPriceInput(e.target.value);
@@ -335,10 +344,7 @@ export default function NovoProdutoPage() {
               <input 
                 type="number"
                 min="0"
-                className={cn(
-                  "w-full rounded-xl bg-[#fbf6f1] p-4 text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                  errors.includes("stock") ? "border-2 border-red-500" : ""
-                )}
+                className={cn(adminFieldClass, errors.includes("stock") ? "border-2 border-red-500" : "")}
                 value={formData.stock ?? ''}
                 onChange={e => setFormData({...formData, stock: e.target.value ? Number(e.target.value) : undefined})}
                 placeholder="0"
@@ -349,10 +355,7 @@ export default function NovoProdutoPage() {
               <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Descrição *</label>
               <textarea 
                 rows={4}
-                className={cn(
-                  "w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper resize-none",
-                  errors.includes("description") ? "border-2 border-red-500" : ""
-                )}
+                className={cn(adminTextareaClass, errors.includes("description") ? "border-2 border-red-500" : "")}
                 value={formData.description}
                 onChange={e => setFormData({...formData, description: e.target.value})}
                 placeholder="Descrição do produto que aparecerá no showroom..."
@@ -377,7 +380,7 @@ export default function NovoProdutoPage() {
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                  className="flex-1 rounded-xl bg-[#fbf6f1] p-3 text-sm text-[#1c1418] outline-none focus:ring-2 focus:ring-copper"
+                  className={adminCompactFieldClass}
                   placeholder={
                     formData.category === "perfumes"
                       ? "Ex: Amadeirado, Intenso..."
@@ -387,16 +390,16 @@ export default function NovoProdutoPage() {
                 <button
                   type="button"
                   onClick={addTag}
-                  className="rounded-xl bg-copper px-4 py-2 text-white transition-colors hover:bg-[#c97941]"
+                  className="rounded-xl bg-copper px-4 py-2 text-white transition-colors hover:bg-[#c97941] dark:hover:bg-[#42202e]"
                 >
                   <Plus size={18} />
                 </button>
               </div>
               <div className="flex flex-wrap gap-2">
                 {formData.tags?.map((tag) => (
-                  <span key={tag} className="flex items-center gap-2 rounded-full bg-[#f2ece5] px-4 py-2 text-xs text-[#1c1418]">
+                  <span key={tag} className={adminPillTagClass}>
                     {tag}
-                    <button type="button" onClick={() => removeTag(tag)} className="hover:text-red-500">
+                    <button type="button" onClick={() => removeTag(tag)} className="hover:text-red-500 dark:hover:text-red-400">
                       <X size={14} />
                     </button>
                   </span>
@@ -415,7 +418,7 @@ export default function NovoProdutoPage() {
               <div>
                 <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Intensidade *</label>
                 <select 
-                  className="w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper"
+                  className={adminSelectClass}
                   value={formData.intensity}
                   onChange={e => setFormData({...formData, intensity: e.target.value as PerfumeIntensity})}
                 >
@@ -428,7 +431,7 @@ export default function NovoProdutoPage() {
               <div>
                 <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Fixação *</label>
                 <select 
-                  className="w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper"
+                  className={adminSelectClass}
                   value={formData.fixation}
                   onChange={e => setFormData({...formData, fixation: e.target.value as PerfumeFixation})}
                 >
@@ -443,10 +446,7 @@ export default function NovoProdutoPage() {
                 <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Concentração *</label>
                 <input 
                   type="text"
-                  className={cn(
-                    "w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                    errors.includes("concentration") ? "border-2 border-red-500" : ""
-                  )}
+                  className={cn(adminFieldClass, "text-sm", errors.includes("concentration") ? "border-2 border-red-500" : "")}
                   value={formData.concentration}
                   onChange={e => setFormData({...formData, concentration: e.target.value})}
                   placeholder="Ex: Eau de Parfum"
@@ -460,10 +460,7 @@ export default function NovoProdutoPage() {
                     <label className="mb-2 block text-xs text-[#8b7c72]">Notas de Topo</label>
                     <input 
                       type="text"
-                      className={cn(
-                        "w-full rounded-xl bg-[#fbf6f1] p-3 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                        errors.includes("notes-top") ? "border-2 border-red-500" : ""
-                      )}
+                      className={cn(adminCompactFieldClass, errors.includes("notes-top") ? "border-2 border-red-500" : "")}
                       value={formData.olfactoryNotes?.top}
                       onChange={e => setFormData({
                         ...formData, 
@@ -476,10 +473,7 @@ export default function NovoProdutoPage() {
                     <label className="mb-2 block text-xs text-[#8b7c72]">Notas de Coração</label>
                     <input 
                       type="text"
-                      className={cn(
-                        "w-full rounded-xl bg-[#fbf6f1] p-3 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                        errors.includes("notes-heart") ? "border-2 border-red-500" : ""
-                      )}
+                      className={cn(adminCompactFieldClass, errors.includes("notes-heart") ? "border-2 border-red-500" : "")}
                       value={formData.olfactoryNotes?.heart}
                       onChange={e => setFormData({
                         ...formData, 
@@ -492,10 +486,7 @@ export default function NovoProdutoPage() {
                     <label className="mb-2 block text-xs text-[#8b7c72]">Notas de Base</label>
                     <input 
                       type="text"
-                      className={cn(
-                        "w-full rounded-xl bg-[#fbf6f1] p-3 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                        errors.includes("notes-base") ? "border-2 border-red-500" : ""
-                      )}
+                      className={cn(adminCompactFieldClass, errors.includes("notes-base") ? "border-2 border-red-500" : "")}
                       value={formData.olfactoryNotes?.base}
                       onChange={e => setFormData({
                         ...formData, 
@@ -524,7 +515,7 @@ export default function NovoProdutoPage() {
                             "rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition-all",
                             isActive
                               ? "border-copper bg-copper text-white"
-                              : "border-[#e3d8cf] bg-white text-[#7b665d] hover:border-copper hover:text-copper",
+                              : "border-[#e3d8cf] bg-white text-[#7b665d] hover:border-copper hover:text-copper dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:hover:border-[#7b4a5a] dark:hover:text-[#f6e6d8]",
                             errors.includes("occasion") ? "ring-2 ring-red-500" : ""
                           )}
                         >
@@ -551,7 +542,7 @@ export default function NovoProdutoPage() {
                             "rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition-all",
                             isActive
                               ? "border-copper bg-copper text-white"
-                              : "border-[#e3d8cf] bg-white text-[#7b665d] hover:border-copper hover:text-copper",
+                              : "border-[#e3d8cf] bg-white text-[#7b665d] hover:border-copper hover:text-copper dark:border-[#37212c] dark:bg-[#24131b] dark:text-[#f6e6d8] dark:hover:border-[#7b4a5a] dark:hover:text-[#f6e6d8]",
                             errors.includes("style") ? "ring-2 ring-red-500" : ""
                           )}
                         >
@@ -575,7 +566,7 @@ export default function NovoProdutoPage() {
               <div>
                 <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Material *</label>
                 <select 
-                  className="w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper"
+                  className={adminSelectClass}
                   value={formData.material}
                   onChange={e => setFormData({...formData, material: e.target.value as JewelryMaterial})}
                 >
@@ -591,10 +582,7 @@ export default function NovoProdutoPage() {
                 <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Acabamento *</label>
                 <input 
                   type="text"
-                  className={cn(
-                    "w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                    errors.includes("finish") ? "border-2 border-red-500" : ""
-                  )}
+                  className={cn(adminFieldClass, "text-sm", errors.includes("finish") ? "border-2 border-red-500" : "")}
                   value={formData.finish}
                   onChange={e => setFormData({...formData, finish: e.target.value})}
                   placeholder="Ex: Polido, Acetinado, Diamantado"
@@ -607,7 +595,7 @@ export default function NovoProdutoPage() {
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper"
+                  className={adminFieldClass}
                   value={formData.weight ?? ''}
                   onChange={e => setFormData({...formData, weight: e.target.value ? Number(e.target.value) : undefined})}
                   placeholder="Ex: 15.5"
@@ -618,10 +606,7 @@ export default function NovoProdutoPage() {
                 <label className="text-[9px] block mb-2 font-bold uppercase tracking-widest text-[#8b7c72]">Dimensões *</label>
                 <input 
                   type="text"
-                  className={cn(
-                    "w-full rounded-xl bg-[#fbf6f1] p-4 text-sm text-[#1c1418] outline-none transition-all focus:ring-2 focus:ring-copper",
-                    errors.includes("dimensions") ? "border-2 border-red-500" : ""
-                  )}
+                  className={cn(adminFieldClass, "text-sm", errors.includes("dimensions") ? "border-2 border-red-500" : "")}
                   value={formData.dimensions}
                   onChange={e => setFormData({...formData, dimensions: e.target.value})}
                   placeholder="Ex: 45cm de comprimento, Tamanho 16"
@@ -635,7 +620,7 @@ export default function NovoProdutoPage() {
         <div className="flex flex-col sm:flex-row justify-end gap-4 pt-6">
           <Link 
             href="/admin"
-            className="rounded-full border border-[#e3d8cf] px-8 py-4 text-center text-xs font-bold uppercase tracking-widest text-[#7b665d] transition-colors hover:border-copper hover:text-copper"
+            className="rounded-full border border-[#e3d8cf] px-8 py-4 text-center text-xs font-bold uppercase tracking-widest text-[#7b665d] transition-colors hover:border-copper hover:text-copper dark:border-[#37212c] dark:text-[#f6e6d8] dark:hover:border-[#7b4a5a] dark:hover:text-[#f6e6d8]"
           >
             Cancelar
           </Link>

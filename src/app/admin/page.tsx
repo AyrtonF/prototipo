@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useProductStore } from "@/store/productStore";
 import { formatCurrency } from "@/lib/utils";
 import { Plus, Edit2, Trash2, Search, Filter, AlertTriangle } from "lucide-react";
@@ -106,7 +107,14 @@ export default function AdminPage() {
               <tr key={product.id} className="group transition-colors hover:bg-black/5 dark:hover:bg-white/5">
                 <td className="p-6">
                   <div className="flex items-center space-x-4">
-                    <img src={product.images[0]} className="h-16 w-12 rounded-lg bg-surface-2 object-cover" />
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      width={48}
+                      height={64}
+                      unoptimized
+                      className="h-16 w-12 rounded-lg bg-surface-2 object-contain p-1"
+                    />
                     <span className="font-serif text-lg text-foreground">{product.name}</span>
                   </div>
                 </td>
@@ -115,18 +123,18 @@ export default function AdminPage() {
                 <td className="p-6 text-center">
                   <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold ${
                     product.stock < 5 
-                      ? 'bg-copper text-foreground animate-pulse' 
-                      : 'bg-surface-2 text-muted'
+                      ? 'bg-copper text-white animate-pulse dark:text-cream' 
+                      : 'bg-surface-2 text-muted dark:text-foreground'
                   }`}>
                     {product.stock} un
                   </span>
                 </td>
                 <td className="p-6 text-right">
                   <div className="flex items-center justify-end space-x-2">
-                    <Link href={`/admin/produtos/editar/${product.id}`} className="p-2 text-muted transition-colors hover:text-copper">
+                    <Link href={`/admin/produtos/editar/${product.id}`} className="rounded-full p-2 text-muted transition-colors hover:bg-cream/10 hover:text-copper dark:hover:bg-white/5 dark:hover:text-foreground">
                       <Edit2 size={18} />
                     </Link>
-                    <button onClick={() => confirm('Excluir este item?') && deleteProduct(product.id)} className="p-2 text-muted transition-colors hover:text-red-500">
+                    <button onClick={() => confirm('Excluir este item?') && deleteProduct(product.id)} className="rounded-full p-2 text-muted transition-colors hover:text-red-500 dark:hover:bg-white/5">
                       <Trash2 size={18} />
                     </button>
                   </div>

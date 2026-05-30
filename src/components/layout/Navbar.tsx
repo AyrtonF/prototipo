@@ -95,13 +95,13 @@ export default function Navbar() {
           )}>
             <span className="relative block h-11 w-11 shrink-0 md:h-12 md:w-12">
               <Image
-                src="/La vie (bege claro).png"
+                src="/logo-quizz-cream.svg"
                 alt="La Vie"
                 fill
-                sizes="56px"
                 className="object-contain"
                 priority
-              />
+                unoptimized
+/>
             </span>
             <span className="font-serif text-[0.72rem] uppercase tracking-[0.38em] text-cream md:text-[0.78rem]">
               La Vie
